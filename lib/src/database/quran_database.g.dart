@@ -76,6 +76,12 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
   late final GeneratedColumn<int> pageStart = GeneratedColumn<int>(
       'page_start', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _revelationTypeMeta =
+      const VerificationMeta('revelationType');
+  @override
+  late final GeneratedColumn<String> revelationType = GeneratedColumn<String>(
+      'revelation_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         number,
@@ -89,7 +95,8 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
         nameUzLatMeaning,
         nameUzCyrMeaning,
         versesCount,
-        pageStart
+        pageStart,
+        revelationType
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -185,6 +192,14 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
     } else if (isInserting) {
       context.missing(_pageStartMeta);
     }
+    if (data.containsKey('revelation_type')) {
+      context.handle(
+          _revelationTypeMeta,
+          revelationType.isAcceptableOrUnknown(
+              data['revelation_type']!, _revelationTypeMeta));
+    } else if (isInserting) {
+      context.missing(_revelationTypeMeta);
+    }
     return context;
   }
 
@@ -218,6 +233,8 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
           .read(DriftSqlType.int, data['${effectivePrefix}verses_count'])!,
       pageStart: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}page_start'])!,
+      revelationType: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}revelation_type'])!,
     );
   }
 
@@ -240,6 +257,7 @@ class SurahData extends DataClass implements Insertable<SurahData> {
   final String nameUzCyrMeaning;
   final int versesCount;
   final int pageStart;
+  final String revelationType;
   const SurahData(
       {required this.number,
       required this.nameAr,
@@ -252,7 +270,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       required this.nameUzLatMeaning,
       required this.nameUzCyrMeaning,
       required this.versesCount,
-      required this.pageStart});
+      required this.pageStart,
+      required this.revelationType});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -268,6 +287,7 @@ class SurahData extends DataClass implements Insertable<SurahData> {
     map['name_uz_cyr_meaning'] = Variable<String>(nameUzCyrMeaning);
     map['verses_count'] = Variable<int>(versesCount);
     map['page_start'] = Variable<int>(pageStart);
+    map['revelation_type'] = Variable<String>(revelationType);
     return map;
   }
 
@@ -285,6 +305,7 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       nameUzCyrMeaning: Value(nameUzCyrMeaning),
       versesCount: Value(versesCount),
       pageStart: Value(pageStart),
+      revelationType: Value(revelationType),
     );
   }
 
@@ -304,6 +325,7 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       nameUzCyrMeaning: serializer.fromJson<String>(json['nameUzCyrMeaning']),
       versesCount: serializer.fromJson<int>(json['versesCount']),
       pageStart: serializer.fromJson<int>(json['pageStart']),
+      revelationType: serializer.fromJson<String>(json['revelationType']),
     );
   }
   @override
@@ -322,6 +344,7 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       'nameUzCyrMeaning': serializer.toJson<String>(nameUzCyrMeaning),
       'versesCount': serializer.toJson<int>(versesCount),
       'pageStart': serializer.toJson<int>(pageStart),
+      'revelationType': serializer.toJson<String>(revelationType),
     };
   }
 
@@ -337,7 +360,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           String? nameUzLatMeaning,
           String? nameUzCyrMeaning,
           int? versesCount,
-          int? pageStart}) =>
+          int? pageStart,
+          String? revelationType}) =>
       SurahData(
         number: number ?? this.number,
         nameAr: nameAr ?? this.nameAr,
@@ -351,33 +375,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
         nameUzCyrMeaning: nameUzCyrMeaning ?? this.nameUzCyrMeaning,
         versesCount: versesCount ?? this.versesCount,
         pageStart: pageStart ?? this.pageStart,
+        revelationType: revelationType ?? this.revelationType,
       );
-  SurahData copyWithCompanion(SurahCompanion data) {
-    return SurahData(
-      number: data.number.present ? data.number.value : this.number,
-      nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
-      nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
-      nameRu: data.nameRu.present ? data.nameRu.value : this.nameRu,
-      nameUzLat: data.nameUzLat.present ? data.nameUzLat.value : this.nameUzLat,
-      nameUzCyr: data.nameUzCyr.present ? data.nameUzCyr.value : this.nameUzCyr,
-      nameEnMeaning: data.nameEnMeaning.present
-          ? data.nameEnMeaning.value
-          : this.nameEnMeaning,
-      nameRuMeaning: data.nameRuMeaning.present
-          ? data.nameRuMeaning.value
-          : this.nameRuMeaning,
-      nameUzLatMeaning: data.nameUzLatMeaning.present
-          ? data.nameUzLatMeaning.value
-          : this.nameUzLatMeaning,
-      nameUzCyrMeaning: data.nameUzCyrMeaning.present
-          ? data.nameUzCyrMeaning.value
-          : this.nameUzCyrMeaning,
-      versesCount:
-          data.versesCount.present ? data.versesCount.value : this.versesCount,
-      pageStart: data.pageStart.present ? data.pageStart.value : this.pageStart,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('SurahData(')
@@ -392,7 +391,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           ..write('nameUzLatMeaning: $nameUzLatMeaning, ')
           ..write('nameUzCyrMeaning: $nameUzCyrMeaning, ')
           ..write('versesCount: $versesCount, ')
-          ..write('pageStart: $pageStart')
+          ..write('pageStart: $pageStart, ')
+          ..write('revelationType: $revelationType')
           ..write(')'))
         .toString();
   }
@@ -410,7 +410,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       nameUzLatMeaning,
       nameUzCyrMeaning,
       versesCount,
-      pageStart);
+      pageStart,
+      revelationType);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -426,7 +427,8 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           other.nameUzLatMeaning == this.nameUzLatMeaning &&
           other.nameUzCyrMeaning == this.nameUzCyrMeaning &&
           other.versesCount == this.versesCount &&
-          other.pageStart == this.pageStart);
+          other.pageStart == this.pageStart &&
+          other.revelationType == this.revelationType);
 }
 
 class SurahCompanion extends UpdateCompanion<SurahData> {
@@ -442,6 +444,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
   final Value<String> nameUzCyrMeaning;
   final Value<int> versesCount;
   final Value<int> pageStart;
+  final Value<String> revelationType;
   const SurahCompanion({
     this.number = const Value.absent(),
     this.nameAr = const Value.absent(),
@@ -455,6 +458,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     this.nameUzCyrMeaning = const Value.absent(),
     this.versesCount = const Value.absent(),
     this.pageStart = const Value.absent(),
+    this.revelationType = const Value.absent(),
   });
   SurahCompanion.insert({
     this.number = const Value.absent(),
@@ -469,6 +473,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     required String nameUzCyrMeaning,
     required int versesCount,
     required int pageStart,
+    required String revelationType,
   })  : nameAr = Value(nameAr),
         nameEn = Value(nameEn),
         nameRu = Value(nameRu),
@@ -479,7 +484,8 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
         nameUzLatMeaning = Value(nameUzLatMeaning),
         nameUzCyrMeaning = Value(nameUzCyrMeaning),
         versesCount = Value(versesCount),
-        pageStart = Value(pageStart);
+        pageStart = Value(pageStart),
+        revelationType = Value(revelationType);
   static Insertable<SurahData> custom({
     Expression<int>? number,
     Expression<String>? nameAr,
@@ -493,6 +499,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     Expression<String>? nameUzCyrMeaning,
     Expression<int>? versesCount,
     Expression<int>? pageStart,
+    Expression<String>? revelationType,
   }) {
     return RawValuesInsertable({
       if (number != null) 'number': number,
@@ -507,6 +514,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       if (nameUzCyrMeaning != null) 'name_uz_cyr_meaning': nameUzCyrMeaning,
       if (versesCount != null) 'verses_count': versesCount,
       if (pageStart != null) 'page_start': pageStart,
+      if (revelationType != null) 'revelation_type': revelationType,
     });
   }
 
@@ -522,7 +530,8 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       Value<String>? nameUzLatMeaning,
       Value<String>? nameUzCyrMeaning,
       Value<int>? versesCount,
-      Value<int>? pageStart}) {
+      Value<int>? pageStart,
+      Value<String>? revelationType}) {
     return SurahCompanion(
       number: number ?? this.number,
       nameAr: nameAr ?? this.nameAr,
@@ -536,6 +545,7 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       nameUzCyrMeaning: nameUzCyrMeaning ?? this.nameUzCyrMeaning,
       versesCount: versesCount ?? this.versesCount,
       pageStart: pageStart ?? this.pageStart,
+      revelationType: revelationType ?? this.revelationType,
     );
   }
 
@@ -578,6 +588,9 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     if (pageStart.present) {
       map['page_start'] = Variable<int>(pageStart.value);
     }
+    if (revelationType.present) {
+      map['revelation_type'] = Variable<String>(revelationType.value);
+    }
     return map;
   }
 
@@ -595,7 +608,8 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
           ..write('nameUzLatMeaning: $nameUzLatMeaning, ')
           ..write('nameUzCyrMeaning: $nameUzCyrMeaning, ')
           ..write('versesCount: $versesCount, ')
-          ..write('pageStart: $pageStart')
+          ..write('pageStart: $pageStart, ')
+          ..write('revelationType: $revelationType')
           ..write(')'))
         .toString();
   }
@@ -824,19 +838,6 @@ class Ayah extends DataClass implements Insertable<Ayah> {
         textUzLat: textUzLat ?? this.textUzLat,
         textUzCyr: textUzCyr ?? this.textUzCyr,
       );
-  Ayah copyWithCompanion(AyahsCompanion data) {
-    return Ayah(
-      id: data.id.present ? data.id.value : this.id,
-      surahId: data.surahId.present ? data.surahId.value : this.surahId,
-      ayahNumber:
-          data.ayahNumber.present ? data.ayahNumber.value : this.ayahNumber,
-      textEn: data.textEn.present ? data.textEn.value : this.textEn,
-      textRu: data.textRu.present ? data.textRu.value : this.textRu,
-      textUzLat: data.textUzLat.present ? data.textUzLat.value : this.textUzLat,
-      textUzCyr: data.textUzCyr.present ? data.textUzCyr.value : this.textUzCyr,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('Ayah(')
@@ -1208,26 +1209,6 @@ class JuzData extends DataClass implements Insertable<JuzData> {
         endSurahNumber: endSurahNumber ?? this.endSurahNumber,
         endAyahNumber: endAyahNumber ?? this.endAyahNumber,
       );
-  JuzData copyWithCompanion(JuzCompanion data) {
-    return JuzData(
-      number: data.number.present ? data.number.value : this.number,
-      nameAr: data.nameAr.present ? data.nameAr.value : this.nameAr,
-      nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
-      startSurahNumber: data.startSurahNumber.present
-          ? data.startSurahNumber.value
-          : this.startSurahNumber,
-      startAyahNumber: data.startAyahNumber.present
-          ? data.startAyahNumber.value
-          : this.startAyahNumber,
-      endSurahNumber: data.endSurahNumber.present
-          ? data.endSurahNumber.value
-          : this.endSurahNumber,
-      endAyahNumber: data.endAyahNumber.present
-          ? data.endAyahNumber.value
-          : this.endAyahNumber,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('JuzData(')
@@ -1523,17 +1504,6 @@ class QuranLineData extends DataClass implements Insertable<QuranLineData> {
         type: type ?? this.type,
         verseRange: verseRange ?? this.verseRange,
       );
-  QuranLineData copyWithCompanion(QuranLineCompanion data) {
-    return QuranLineData(
-      id: data.id.present ? data.id.value : this.id,
-      pageNumber:
-          data.pageNumber.present ? data.pageNumber.value : this.pageNumber,
-      type: data.type.present ? data.type.value : this.type,
-      verseRange:
-          data.verseRange.present ? data.verseRange.value : this.verseRange,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('QuranLineData(')
@@ -1828,17 +1798,6 @@ class QuranLineWordData extends DataClass
         qocV2: qocV2 ?? this.qocV2,
         lineId: lineId ?? this.lineId,
       );
-  QuranLineWordData copyWithCompanion(QuranLineWordCompanion data) {
-    return QuranLineWordData(
-      id: data.id.present ? data.id.value : this.id,
-      location: data.location.present ? data.location.value : this.location,
-      word: data.word.present ? data.word.value : this.word,
-      qocV1: data.qocV1.present ? data.qocV1.value : this.qocV1,
-      qocV2: data.qocV2.present ? data.qocV2.value : this.qocV2,
-      lineId: data.lineId.present ? data.lineId.value : this.lineId,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('QuranLineWordData(')
@@ -2126,16 +2085,6 @@ class SurahJuzData extends DataClass implements Insertable<SurahJuzData> {
         startAyah: startAyah.present ? startAyah.value : this.startAyah,
         endAyah: endAyah.present ? endAyah.value : this.endAyah,
       );
-  SurahJuzData copyWithCompanion(SurahJuzCompanion data) {
-    return SurahJuzData(
-      surahNumber:
-          data.surahNumber.present ? data.surahNumber.value : this.surahNumber,
-      juzNumber: data.juzNumber.present ? data.juzNumber.value : this.juzNumber,
-      startAyah: data.startAyah.present ? data.startAyah.value : this.startAyah,
-      endAyah: data.endAyah.present ? data.endAyah.value : this.endAyah,
-    );
-  }
-
   @override
   String toString() {
     return (StringBuffer('SurahJuzData(')
@@ -2247,7 +2196,6 @@ class SurahJuzCompanion extends UpdateCompanion<SurahJuzData> {
 
 abstract class _$QuranDatabase extends GeneratedDatabase {
   _$QuranDatabase(QueryExecutor e) : super(e);
-  $QuranDatabaseManager get managers => $QuranDatabaseManager(this);
   late final $SurahTable surah = $SurahTable(this);
   late final $AyahsTable ayahs = $AyahsTable(this);
   late final $JuzTable juz = $JuzTable(this);
@@ -2260,1163 +2208,4 @@ abstract class _$QuranDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [surah, ayahs, juz, quranLine, quranLineWord, surahJuz];
-}
-
-typedef $$SurahTableCreateCompanionBuilder = SurahCompanion Function({
-  Value<int> number,
-  required String nameAr,
-  required String nameEn,
-  required String nameRu,
-  required String nameUzLat,
-  required String nameUzCyr,
-  required String nameEnMeaning,
-  required String nameRuMeaning,
-  required String nameUzLatMeaning,
-  required String nameUzCyrMeaning,
-  required int versesCount,
-  required int pageStart,
-});
-typedef $$SurahTableUpdateCompanionBuilder = SurahCompanion Function({
-  Value<int> number,
-  Value<String> nameAr,
-  Value<String> nameEn,
-  Value<String> nameRu,
-  Value<String> nameUzLat,
-  Value<String> nameUzCyr,
-  Value<String> nameEnMeaning,
-  Value<String> nameRuMeaning,
-  Value<String> nameUzLatMeaning,
-  Value<String> nameUzCyrMeaning,
-  Value<int> versesCount,
-  Value<int> pageStart,
-});
-
-class $$SurahTableFilterComposer
-    extends Composer<_$QuranDatabase, $SurahTable> {
-  $$SurahTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameRu => $composableBuilder(
-      column: $table.nameRu, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameUzLat => $composableBuilder(
-      column: $table.nameUzLat, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameUzCyr => $composableBuilder(
-      column: $table.nameUzCyr, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameEnMeaning => $composableBuilder(
-      column: $table.nameEnMeaning, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameRuMeaning => $composableBuilder(
-      column: $table.nameRuMeaning, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameUzLatMeaning => $composableBuilder(
-      column: $table.nameUzLatMeaning,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameUzCyrMeaning => $composableBuilder(
-      column: $table.nameUzCyrMeaning,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get versesCount => $composableBuilder(
-      column: $table.versesCount, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get pageStart => $composableBuilder(
-      column: $table.pageStart, builder: (column) => ColumnFilters(column));
-}
-
-class $$SurahTableOrderingComposer
-    extends Composer<_$QuranDatabase, $SurahTable> {
-  $$SurahTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameRu => $composableBuilder(
-      column: $table.nameRu, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameUzLat => $composableBuilder(
-      column: $table.nameUzLat, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameUzCyr => $composableBuilder(
-      column: $table.nameUzCyr, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameEnMeaning => $composableBuilder(
-      column: $table.nameEnMeaning,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameRuMeaning => $composableBuilder(
-      column: $table.nameRuMeaning,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameUzLatMeaning => $composableBuilder(
-      column: $table.nameUzLatMeaning,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameUzCyrMeaning => $composableBuilder(
-      column: $table.nameUzCyrMeaning,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get versesCount => $composableBuilder(
-      column: $table.versesCount, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get pageStart => $composableBuilder(
-      column: $table.pageStart, builder: (column) => ColumnOrderings(column));
-}
-
-class $$SurahTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $SurahTable> {
-  $$SurahTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get number =>
-      $composableBuilder(column: $table.number, builder: (column) => column);
-
-  GeneratedColumn<String> get nameAr =>
-      $composableBuilder(column: $table.nameAr, builder: (column) => column);
-
-  GeneratedColumn<String> get nameEn =>
-      $composableBuilder(column: $table.nameEn, builder: (column) => column);
-
-  GeneratedColumn<String> get nameRu =>
-      $composableBuilder(column: $table.nameRu, builder: (column) => column);
-
-  GeneratedColumn<String> get nameUzLat =>
-      $composableBuilder(column: $table.nameUzLat, builder: (column) => column);
-
-  GeneratedColumn<String> get nameUzCyr =>
-      $composableBuilder(column: $table.nameUzCyr, builder: (column) => column);
-
-  GeneratedColumn<String> get nameEnMeaning => $composableBuilder(
-      column: $table.nameEnMeaning, builder: (column) => column);
-
-  GeneratedColumn<String> get nameRuMeaning => $composableBuilder(
-      column: $table.nameRuMeaning, builder: (column) => column);
-
-  GeneratedColumn<String> get nameUzLatMeaning => $composableBuilder(
-      column: $table.nameUzLatMeaning, builder: (column) => column);
-
-  GeneratedColumn<String> get nameUzCyrMeaning => $composableBuilder(
-      column: $table.nameUzCyrMeaning, builder: (column) => column);
-
-  GeneratedColumn<int> get versesCount => $composableBuilder(
-      column: $table.versesCount, builder: (column) => column);
-
-  GeneratedColumn<int> get pageStart =>
-      $composableBuilder(column: $table.pageStart, builder: (column) => column);
-}
-
-class $$SurahTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $SurahTable,
-    SurahData,
-    $$SurahTableFilterComposer,
-    $$SurahTableOrderingComposer,
-    $$SurahTableAnnotationComposer,
-    $$SurahTableCreateCompanionBuilder,
-    $$SurahTableUpdateCompanionBuilder,
-    (SurahData, BaseReferences<_$QuranDatabase, $SurahTable, SurahData>),
-    SurahData,
-    PrefetchHooks Function()> {
-  $$SurahTableTableManager(_$QuranDatabase db, $SurahTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$SurahTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$SurahTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$SurahTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> number = const Value.absent(),
-            Value<String> nameAr = const Value.absent(),
-            Value<String> nameEn = const Value.absent(),
-            Value<String> nameRu = const Value.absent(),
-            Value<String> nameUzLat = const Value.absent(),
-            Value<String> nameUzCyr = const Value.absent(),
-            Value<String> nameEnMeaning = const Value.absent(),
-            Value<String> nameRuMeaning = const Value.absent(),
-            Value<String> nameUzLatMeaning = const Value.absent(),
-            Value<String> nameUzCyrMeaning = const Value.absent(),
-            Value<int> versesCount = const Value.absent(),
-            Value<int> pageStart = const Value.absent(),
-          }) =>
-              SurahCompanion(
-            number: number,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            nameRu: nameRu,
-            nameUzLat: nameUzLat,
-            nameUzCyr: nameUzCyr,
-            nameEnMeaning: nameEnMeaning,
-            nameRuMeaning: nameRuMeaning,
-            nameUzLatMeaning: nameUzLatMeaning,
-            nameUzCyrMeaning: nameUzCyrMeaning,
-            versesCount: versesCount,
-            pageStart: pageStart,
-          ),
-          createCompanionCallback: ({
-            Value<int> number = const Value.absent(),
-            required String nameAr,
-            required String nameEn,
-            required String nameRu,
-            required String nameUzLat,
-            required String nameUzCyr,
-            required String nameEnMeaning,
-            required String nameRuMeaning,
-            required String nameUzLatMeaning,
-            required String nameUzCyrMeaning,
-            required int versesCount,
-            required int pageStart,
-          }) =>
-              SurahCompanion.insert(
-            number: number,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            nameRu: nameRu,
-            nameUzLat: nameUzLat,
-            nameUzCyr: nameUzCyr,
-            nameEnMeaning: nameEnMeaning,
-            nameRuMeaning: nameRuMeaning,
-            nameUzLatMeaning: nameUzLatMeaning,
-            nameUzCyrMeaning: nameUzCyrMeaning,
-            versesCount: versesCount,
-            pageStart: pageStart,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$SurahTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $SurahTable,
-    SurahData,
-    $$SurahTableFilterComposer,
-    $$SurahTableOrderingComposer,
-    $$SurahTableAnnotationComposer,
-    $$SurahTableCreateCompanionBuilder,
-    $$SurahTableUpdateCompanionBuilder,
-    (SurahData, BaseReferences<_$QuranDatabase, $SurahTable, SurahData>),
-    SurahData,
-    PrefetchHooks Function()>;
-typedef $$AyahsTableCreateCompanionBuilder = AyahsCompanion Function({
-  Value<int> id,
-  required int surahId,
-  required int ayahNumber,
-  required String textEn,
-  required String textRu,
-  required String textUzLat,
-  required String textUzCyr,
-});
-typedef $$AyahsTableUpdateCompanionBuilder = AyahsCompanion Function({
-  Value<int> id,
-  Value<int> surahId,
-  Value<int> ayahNumber,
-  Value<String> textEn,
-  Value<String> textRu,
-  Value<String> textUzLat,
-  Value<String> textUzCyr,
-});
-
-class $$AyahsTableFilterComposer
-    extends Composer<_$QuranDatabase, $AyahsTable> {
-  $$AyahsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get surahId => $composableBuilder(
-      column: $table.surahId, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get ayahNumber => $composableBuilder(
-      column: $table.ayahNumber, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get textEn => $composableBuilder(
-      column: $table.textEn, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get textRu => $composableBuilder(
-      column: $table.textRu, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get textUzLat => $composableBuilder(
-      column: $table.textUzLat, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get textUzCyr => $composableBuilder(
-      column: $table.textUzCyr, builder: (column) => ColumnFilters(column));
-}
-
-class $$AyahsTableOrderingComposer
-    extends Composer<_$QuranDatabase, $AyahsTable> {
-  $$AyahsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get surahId => $composableBuilder(
-      column: $table.surahId, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get ayahNumber => $composableBuilder(
-      column: $table.ayahNumber, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get textEn => $composableBuilder(
-      column: $table.textEn, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get textRu => $composableBuilder(
-      column: $table.textRu, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get textUzLat => $composableBuilder(
-      column: $table.textUzLat, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get textUzCyr => $composableBuilder(
-      column: $table.textUzCyr, builder: (column) => ColumnOrderings(column));
-}
-
-class $$AyahsTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $AyahsTable> {
-  $$AyahsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get surahId =>
-      $composableBuilder(column: $table.surahId, builder: (column) => column);
-
-  GeneratedColumn<int> get ayahNumber => $composableBuilder(
-      column: $table.ayahNumber, builder: (column) => column);
-
-  GeneratedColumn<String> get textEn =>
-      $composableBuilder(column: $table.textEn, builder: (column) => column);
-
-  GeneratedColumn<String> get textRu =>
-      $composableBuilder(column: $table.textRu, builder: (column) => column);
-
-  GeneratedColumn<String> get textUzLat =>
-      $composableBuilder(column: $table.textUzLat, builder: (column) => column);
-
-  GeneratedColumn<String> get textUzCyr =>
-      $composableBuilder(column: $table.textUzCyr, builder: (column) => column);
-}
-
-class $$AyahsTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $AyahsTable,
-    Ayah,
-    $$AyahsTableFilterComposer,
-    $$AyahsTableOrderingComposer,
-    $$AyahsTableAnnotationComposer,
-    $$AyahsTableCreateCompanionBuilder,
-    $$AyahsTableUpdateCompanionBuilder,
-    (Ayah, BaseReferences<_$QuranDatabase, $AyahsTable, Ayah>),
-    Ayah,
-    PrefetchHooks Function()> {
-  $$AyahsTableTableManager(_$QuranDatabase db, $AyahsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$AyahsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$AyahsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$AyahsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> surahId = const Value.absent(),
-            Value<int> ayahNumber = const Value.absent(),
-            Value<String> textEn = const Value.absent(),
-            Value<String> textRu = const Value.absent(),
-            Value<String> textUzLat = const Value.absent(),
-            Value<String> textUzCyr = const Value.absent(),
-          }) =>
-              AyahsCompanion(
-            id: id,
-            surahId: surahId,
-            ayahNumber: ayahNumber,
-            textEn: textEn,
-            textRu: textRu,
-            textUzLat: textUzLat,
-            textUzCyr: textUzCyr,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int surahId,
-            required int ayahNumber,
-            required String textEn,
-            required String textRu,
-            required String textUzLat,
-            required String textUzCyr,
-          }) =>
-              AyahsCompanion.insert(
-            id: id,
-            surahId: surahId,
-            ayahNumber: ayahNumber,
-            textEn: textEn,
-            textRu: textRu,
-            textUzLat: textUzLat,
-            textUzCyr: textUzCyr,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$AyahsTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $AyahsTable,
-    Ayah,
-    $$AyahsTableFilterComposer,
-    $$AyahsTableOrderingComposer,
-    $$AyahsTableAnnotationComposer,
-    $$AyahsTableCreateCompanionBuilder,
-    $$AyahsTableUpdateCompanionBuilder,
-    (Ayah, BaseReferences<_$QuranDatabase, $AyahsTable, Ayah>),
-    Ayah,
-    PrefetchHooks Function()>;
-typedef $$JuzTableCreateCompanionBuilder = JuzCompanion Function({
-  Value<int> number,
-  required String nameAr,
-  required String nameEn,
-  required int startSurahNumber,
-  required int startAyahNumber,
-  required int endSurahNumber,
-  required int endAyahNumber,
-});
-typedef $$JuzTableUpdateCompanionBuilder = JuzCompanion Function({
-  Value<int> number,
-  Value<String> nameAr,
-  Value<String> nameEn,
-  Value<int> startSurahNumber,
-  Value<int> startAyahNumber,
-  Value<int> endSurahNumber,
-  Value<int> endAyahNumber,
-});
-
-class $$JuzTableFilterComposer extends Composer<_$QuranDatabase, $JuzTable> {
-  $$JuzTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get startSurahNumber => $composableBuilder(
-      column: $table.startSurahNumber,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get startAyahNumber => $composableBuilder(
-      column: $table.startAyahNumber,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get endSurahNumber => $composableBuilder(
-      column: $table.endSurahNumber,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get endAyahNumber => $composableBuilder(
-      column: $table.endAyahNumber, builder: (column) => ColumnFilters(column));
-}
-
-class $$JuzTableOrderingComposer extends Composer<_$QuranDatabase, $JuzTable> {
-  $$JuzTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get number => $composableBuilder(
-      column: $table.number, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get startSurahNumber => $composableBuilder(
-      column: $table.startSurahNumber,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get startAyahNumber => $composableBuilder(
-      column: $table.startAyahNumber,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get endSurahNumber => $composableBuilder(
-      column: $table.endSurahNumber,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get endAyahNumber => $composableBuilder(
-      column: $table.endAyahNumber,
-      builder: (column) => ColumnOrderings(column));
-}
-
-class $$JuzTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $JuzTable> {
-  $$JuzTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get number =>
-      $composableBuilder(column: $table.number, builder: (column) => column);
-
-  GeneratedColumn<String> get nameAr =>
-      $composableBuilder(column: $table.nameAr, builder: (column) => column);
-
-  GeneratedColumn<String> get nameEn =>
-      $composableBuilder(column: $table.nameEn, builder: (column) => column);
-
-  GeneratedColumn<int> get startSurahNumber => $composableBuilder(
-      column: $table.startSurahNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get startAyahNumber => $composableBuilder(
-      column: $table.startAyahNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get endSurahNumber => $composableBuilder(
-      column: $table.endSurahNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get endAyahNumber => $composableBuilder(
-      column: $table.endAyahNumber, builder: (column) => column);
-}
-
-class $$JuzTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $JuzTable,
-    JuzData,
-    $$JuzTableFilterComposer,
-    $$JuzTableOrderingComposer,
-    $$JuzTableAnnotationComposer,
-    $$JuzTableCreateCompanionBuilder,
-    $$JuzTableUpdateCompanionBuilder,
-    (JuzData, BaseReferences<_$QuranDatabase, $JuzTable, JuzData>),
-    JuzData,
-    PrefetchHooks Function()> {
-  $$JuzTableTableManager(_$QuranDatabase db, $JuzTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$JuzTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$JuzTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$JuzTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> number = const Value.absent(),
-            Value<String> nameAr = const Value.absent(),
-            Value<String> nameEn = const Value.absent(),
-            Value<int> startSurahNumber = const Value.absent(),
-            Value<int> startAyahNumber = const Value.absent(),
-            Value<int> endSurahNumber = const Value.absent(),
-            Value<int> endAyahNumber = const Value.absent(),
-          }) =>
-              JuzCompanion(
-            number: number,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            startSurahNumber: startSurahNumber,
-            startAyahNumber: startAyahNumber,
-            endSurahNumber: endSurahNumber,
-            endAyahNumber: endAyahNumber,
-          ),
-          createCompanionCallback: ({
-            Value<int> number = const Value.absent(),
-            required String nameAr,
-            required String nameEn,
-            required int startSurahNumber,
-            required int startAyahNumber,
-            required int endSurahNumber,
-            required int endAyahNumber,
-          }) =>
-              JuzCompanion.insert(
-            number: number,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            startSurahNumber: startSurahNumber,
-            startAyahNumber: startAyahNumber,
-            endSurahNumber: endSurahNumber,
-            endAyahNumber: endAyahNumber,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$JuzTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $JuzTable,
-    JuzData,
-    $$JuzTableFilterComposer,
-    $$JuzTableOrderingComposer,
-    $$JuzTableAnnotationComposer,
-    $$JuzTableCreateCompanionBuilder,
-    $$JuzTableUpdateCompanionBuilder,
-    (JuzData, BaseReferences<_$QuranDatabase, $JuzTable, JuzData>),
-    JuzData,
-    PrefetchHooks Function()>;
-typedef $$QuranLineTableCreateCompanionBuilder = QuranLineCompanion Function({
-  Value<int> id,
-  required int pageNumber,
-  required String type,
-  required String verseRange,
-});
-typedef $$QuranLineTableUpdateCompanionBuilder = QuranLineCompanion Function({
-  Value<int> id,
-  Value<int> pageNumber,
-  Value<String> type,
-  Value<String> verseRange,
-});
-
-class $$QuranLineTableFilterComposer
-    extends Composer<_$QuranDatabase, $QuranLineTable> {
-  $$QuranLineTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get pageNumber => $composableBuilder(
-      column: $table.pageNumber, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get verseRange => $composableBuilder(
-      column: $table.verseRange, builder: (column) => ColumnFilters(column));
-}
-
-class $$QuranLineTableOrderingComposer
-    extends Composer<_$QuranDatabase, $QuranLineTable> {
-  $$QuranLineTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get pageNumber => $composableBuilder(
-      column: $table.pageNumber, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get verseRange => $composableBuilder(
-      column: $table.verseRange, builder: (column) => ColumnOrderings(column));
-}
-
-class $$QuranLineTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $QuranLineTable> {
-  $$QuranLineTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<int> get pageNumber => $composableBuilder(
-      column: $table.pageNumber, builder: (column) => column);
-
-  GeneratedColumn<String> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumn<String> get verseRange => $composableBuilder(
-      column: $table.verseRange, builder: (column) => column);
-}
-
-class $$QuranLineTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $QuranLineTable,
-    QuranLineData,
-    $$QuranLineTableFilterComposer,
-    $$QuranLineTableOrderingComposer,
-    $$QuranLineTableAnnotationComposer,
-    $$QuranLineTableCreateCompanionBuilder,
-    $$QuranLineTableUpdateCompanionBuilder,
-    (
-      QuranLineData,
-      BaseReferences<_$QuranDatabase, $QuranLineTable, QuranLineData>
-    ),
-    QuranLineData,
-    PrefetchHooks Function()> {
-  $$QuranLineTableTableManager(_$QuranDatabase db, $QuranLineTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$QuranLineTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$QuranLineTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$QuranLineTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> pageNumber = const Value.absent(),
-            Value<String> type = const Value.absent(),
-            Value<String> verseRange = const Value.absent(),
-          }) =>
-              QuranLineCompanion(
-            id: id,
-            pageNumber: pageNumber,
-            type: type,
-            verseRange: verseRange,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int pageNumber,
-            required String type,
-            required String verseRange,
-          }) =>
-              QuranLineCompanion.insert(
-            id: id,
-            pageNumber: pageNumber,
-            type: type,
-            verseRange: verseRange,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$QuranLineTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $QuranLineTable,
-    QuranLineData,
-    $$QuranLineTableFilterComposer,
-    $$QuranLineTableOrderingComposer,
-    $$QuranLineTableAnnotationComposer,
-    $$QuranLineTableCreateCompanionBuilder,
-    $$QuranLineTableUpdateCompanionBuilder,
-    (
-      QuranLineData,
-      BaseReferences<_$QuranDatabase, $QuranLineTable, QuranLineData>
-    ),
-    QuranLineData,
-    PrefetchHooks Function()>;
-typedef $$QuranLineWordTableCreateCompanionBuilder = QuranLineWordCompanion
-    Function({
-  Value<int> id,
-  required String location,
-  required String word,
-  required String qocV1,
-  required String qocV2,
-  required int lineId,
-});
-typedef $$QuranLineWordTableUpdateCompanionBuilder = QuranLineWordCompanion
-    Function({
-  Value<int> id,
-  Value<String> location,
-  Value<String> word,
-  Value<String> qocV1,
-  Value<String> qocV2,
-  Value<int> lineId,
-});
-
-class $$QuranLineWordTableFilterComposer
-    extends Composer<_$QuranDatabase, $QuranLineWordTable> {
-  $$QuranLineWordTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get location => $composableBuilder(
-      column: $table.location, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get word => $composableBuilder(
-      column: $table.word, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get qocV1 => $composableBuilder(
-      column: $table.qocV1, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get qocV2 => $composableBuilder(
-      column: $table.qocV2, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get lineId => $composableBuilder(
-      column: $table.lineId, builder: (column) => ColumnFilters(column));
-}
-
-class $$QuranLineWordTableOrderingComposer
-    extends Composer<_$QuranDatabase, $QuranLineWordTable> {
-  $$QuranLineWordTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get location => $composableBuilder(
-      column: $table.location, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get word => $composableBuilder(
-      column: $table.word, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get qocV1 => $composableBuilder(
-      column: $table.qocV1, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get qocV2 => $composableBuilder(
-      column: $table.qocV2, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get lineId => $composableBuilder(
-      column: $table.lineId, builder: (column) => ColumnOrderings(column));
-}
-
-class $$QuranLineWordTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $QuranLineWordTable> {
-  $$QuranLineWordTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get location =>
-      $composableBuilder(column: $table.location, builder: (column) => column);
-
-  GeneratedColumn<String> get word =>
-      $composableBuilder(column: $table.word, builder: (column) => column);
-
-  GeneratedColumn<String> get qocV1 =>
-      $composableBuilder(column: $table.qocV1, builder: (column) => column);
-
-  GeneratedColumn<String> get qocV2 =>
-      $composableBuilder(column: $table.qocV2, builder: (column) => column);
-
-  GeneratedColumn<int> get lineId =>
-      $composableBuilder(column: $table.lineId, builder: (column) => column);
-}
-
-class $$QuranLineWordTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $QuranLineWordTable,
-    QuranLineWordData,
-    $$QuranLineWordTableFilterComposer,
-    $$QuranLineWordTableOrderingComposer,
-    $$QuranLineWordTableAnnotationComposer,
-    $$QuranLineWordTableCreateCompanionBuilder,
-    $$QuranLineWordTableUpdateCompanionBuilder,
-    (
-      QuranLineWordData,
-      BaseReferences<_$QuranDatabase, $QuranLineWordTable, QuranLineWordData>
-    ),
-    QuranLineWordData,
-    PrefetchHooks Function()> {
-  $$QuranLineWordTableTableManager(
-      _$QuranDatabase db, $QuranLineWordTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$QuranLineWordTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$QuranLineWordTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$QuranLineWordTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> location = const Value.absent(),
-            Value<String> word = const Value.absent(),
-            Value<String> qocV1 = const Value.absent(),
-            Value<String> qocV2 = const Value.absent(),
-            Value<int> lineId = const Value.absent(),
-          }) =>
-              QuranLineWordCompanion(
-            id: id,
-            location: location,
-            word: word,
-            qocV1: qocV1,
-            qocV2: qocV2,
-            lineId: lineId,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String location,
-            required String word,
-            required String qocV1,
-            required String qocV2,
-            required int lineId,
-          }) =>
-              QuranLineWordCompanion.insert(
-            id: id,
-            location: location,
-            word: word,
-            qocV1: qocV1,
-            qocV2: qocV2,
-            lineId: lineId,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$QuranLineWordTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $QuranLineWordTable,
-    QuranLineWordData,
-    $$QuranLineWordTableFilterComposer,
-    $$QuranLineWordTableOrderingComposer,
-    $$QuranLineWordTableAnnotationComposer,
-    $$QuranLineWordTableCreateCompanionBuilder,
-    $$QuranLineWordTableUpdateCompanionBuilder,
-    (
-      QuranLineWordData,
-      BaseReferences<_$QuranDatabase, $QuranLineWordTable, QuranLineWordData>
-    ),
-    QuranLineWordData,
-    PrefetchHooks Function()>;
-typedef $$SurahJuzTableCreateCompanionBuilder = SurahJuzCompanion Function({
-  required int surahNumber,
-  required int juzNumber,
-  Value<int?> startAyah,
-  Value<int?> endAyah,
-  Value<int> rowid,
-});
-typedef $$SurahJuzTableUpdateCompanionBuilder = SurahJuzCompanion Function({
-  Value<int> surahNumber,
-  Value<int> juzNumber,
-  Value<int?> startAyah,
-  Value<int?> endAyah,
-  Value<int> rowid,
-});
-
-class $$SurahJuzTableFilterComposer
-    extends Composer<_$QuranDatabase, $SurahJuzTable> {
-  $$SurahJuzTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get surahNumber => $composableBuilder(
-      column: $table.surahNumber, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get juzNumber => $composableBuilder(
-      column: $table.juzNumber, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get startAyah => $composableBuilder(
-      column: $table.startAyah, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<int> get endAyah => $composableBuilder(
-      column: $table.endAyah, builder: (column) => ColumnFilters(column));
-}
-
-class $$SurahJuzTableOrderingComposer
-    extends Composer<_$QuranDatabase, $SurahJuzTable> {
-  $$SurahJuzTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get surahNumber => $composableBuilder(
-      column: $table.surahNumber, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get juzNumber => $composableBuilder(
-      column: $table.juzNumber, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get startAyah => $composableBuilder(
-      column: $table.startAyah, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<int> get endAyah => $composableBuilder(
-      column: $table.endAyah, builder: (column) => ColumnOrderings(column));
-}
-
-class $$SurahJuzTableAnnotationComposer
-    extends Composer<_$QuranDatabase, $SurahJuzTable> {
-  $$SurahJuzTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get surahNumber => $composableBuilder(
-      column: $table.surahNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get juzNumber =>
-      $composableBuilder(column: $table.juzNumber, builder: (column) => column);
-
-  GeneratedColumn<int> get startAyah =>
-      $composableBuilder(column: $table.startAyah, builder: (column) => column);
-
-  GeneratedColumn<int> get endAyah =>
-      $composableBuilder(column: $table.endAyah, builder: (column) => column);
-}
-
-class $$SurahJuzTableTableManager extends RootTableManager<
-    _$QuranDatabase,
-    $SurahJuzTable,
-    SurahJuzData,
-    $$SurahJuzTableFilterComposer,
-    $$SurahJuzTableOrderingComposer,
-    $$SurahJuzTableAnnotationComposer,
-    $$SurahJuzTableCreateCompanionBuilder,
-    $$SurahJuzTableUpdateCompanionBuilder,
-    (
-      SurahJuzData,
-      BaseReferences<_$QuranDatabase, $SurahJuzTable, SurahJuzData>
-    ),
-    SurahJuzData,
-    PrefetchHooks Function()> {
-  $$SurahJuzTableTableManager(_$QuranDatabase db, $SurahJuzTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$SurahJuzTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$SurahJuzTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$SurahJuzTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> surahNumber = const Value.absent(),
-            Value<int> juzNumber = const Value.absent(),
-            Value<int?> startAyah = const Value.absent(),
-            Value<int?> endAyah = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              SurahJuzCompanion(
-            surahNumber: surahNumber,
-            juzNumber: juzNumber,
-            startAyah: startAyah,
-            endAyah: endAyah,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int surahNumber,
-            required int juzNumber,
-            Value<int?> startAyah = const Value.absent(),
-            Value<int?> endAyah = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              SurahJuzCompanion.insert(
-            surahNumber: surahNumber,
-            juzNumber: juzNumber,
-            startAyah: startAyah,
-            endAyah: endAyah,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$SurahJuzTableProcessedTableManager = ProcessedTableManager<
-    _$QuranDatabase,
-    $SurahJuzTable,
-    SurahJuzData,
-    $$SurahJuzTableFilterComposer,
-    $$SurahJuzTableOrderingComposer,
-    $$SurahJuzTableAnnotationComposer,
-    $$SurahJuzTableCreateCompanionBuilder,
-    $$SurahJuzTableUpdateCompanionBuilder,
-    (
-      SurahJuzData,
-      BaseReferences<_$QuranDatabase, $SurahJuzTable, SurahJuzData>
-    ),
-    SurahJuzData,
-    PrefetchHooks Function()>;
-
-class $QuranDatabaseManager {
-  final _$QuranDatabase _db;
-  $QuranDatabaseManager(this._db);
-  $$SurahTableTableManager get surah =>
-      $$SurahTableTableManager(_db, _db.surah);
-  $$AyahsTableTableManager get ayahs =>
-      $$AyahsTableTableManager(_db, _db.ayahs);
-  $$JuzTableTableManager get juz => $$JuzTableTableManager(_db, _db.juz);
-  $$QuranLineTableTableManager get quranLine =>
-      $$QuranLineTableTableManager(_db, _db.quranLine);
-  $$QuranLineWordTableTableManager get quranLineWord =>
-      $$QuranLineWordTableTableManager(_db, _db.quranLineWord);
-  $$SurahJuzTableTableManager get surahJuz =>
-      $$SurahJuzTableTableManager(_db, _db.surahJuz);
 }

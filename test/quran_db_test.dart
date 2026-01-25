@@ -83,4 +83,24 @@ void main() {
       expect(exception.page, 0);
     });
   });
+
+  group('RevelationType', () {
+    test('has all expected values', () {
+      expect(RevelationType.values.length, 2);
+      expect(RevelationType.meccan.value, 'MECCAN');
+      expect(RevelationType.medinan.value, 'MEDINAN');
+    });
+
+    test('fromValue returns correct type', () {
+      expect(RevelationType.fromValue('MECCAN'), RevelationType.meccan);
+      expect(RevelationType.fromValue('MEDINAN'), RevelationType.medinan);
+    });
+
+    test('fromValue throws for unknown values', () {
+      expect(
+        () => RevelationType.fromValue('unknown'),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+  });
 }

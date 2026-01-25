@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../common/revelation_type.dart';
+
 part 'surah_model.freezed.dart';
 part 'surah_model.g.dart';
 
@@ -42,6 +44,9 @@ class SurahModel with _$SurahModel {
 
     /// Page number where this surah starts.
     required int pageStart,
+
+    /// Revelation type (Meccan or Medinan).
+    required RevelationType revelationType,
   }) = _SurahModel;
 
   factory SurahModel.fromJson(Map<String, dynamic> json) =>

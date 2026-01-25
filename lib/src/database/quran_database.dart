@@ -22,6 +22,7 @@ class Surah extends Table {
   TextColumn get nameUzCyrMeaning => text().named('name_uz_cyr_meaning')();
   IntColumn get versesCount => integer().named('verses_count')();
   IntColumn get pageStart => integer().named('page_start')();
+  TextColumn get revelationType => text().named('revelation_type')();
 
   @override
   Set<Column> get primaryKey => {number};

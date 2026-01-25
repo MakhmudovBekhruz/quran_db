@@ -6,7 +6,8 @@ A comprehensive Flutter plugin providing offline access to Quran data including 
 
 - 📖 **Complete Quran Data**: All 114 Surahs, 6236 Ayahs, and 30 Juz
 - 🌍 **Multi-language Support**: English, Russian, Uzbek (Latin & Cyrillic)
-- 🔍 **Advanced Search**: Search Ayahs and Surah names with pagination
+- � **Revelation Info**: Meccan/Medinan designation with localized city names
+- �🔍 **Advanced Search**: Search Ayahs and Surah names with pagination
 - 📄 **Page-based Layout**: Access Quran pages with lines and words for rendering
 - ⚡ **Permanent Caching**: Fast access with automatic caching
 - 🔒 **Offline-first**: All data stored locally in SQLite database
@@ -77,6 +78,26 @@ enum QuranLanguage {
 }
 ```
 
+### Revelation Type
+
+Each surah has a revelation type indicating where it was revealed:
+
+```dart
+enum RevelationType {
+  meccan,   // Revealed in Mecca
+  medinan,  // Revealed in Medina
+}
+```
+
+The localized city names are available through `LocalizedSurahModel.revelationCity`:
+
+| Language | Meccan | Medinan |
+|----------|--------|---------|
+| English | Mecca | Medina |
+| Russian | Мекка | Медина |
+| Uzbek Latin | Makka | Madina |
+| Uzbek Cyrillic | Макка | Мадина |
+
 ### Surah Methods
 
 #### Get All Surahs
@@ -90,6 +111,7 @@ for (final surah in surahs) {
   print('${surah.number}. ${surah.name} (${surah.nameArabic})');
   print('   Meaning: ${surah.meaning}');
   print('   Verses: ${surah.versesCount}');
+  print('   Revealed in: ${surah.revelationCity}');
   print('   Starts on page: ${surah.pageStart}');
 }
 ```
@@ -381,12 +403,14 @@ final surahResults = await QuranDb.instance.repository.searchSurahs(
 
 ```dart
 class LocalizedSurahModel {
-  final int number;        // Surah number (1-114)
-  final String nameArabic; // Arabic name
-  final String name;       // Localized name
-  final String meaning;    // Localized meaning
-  final int versesCount;   // Number of verses
-  final int pageStart;     // Starting page number
+  final int number;              // Surah number (1-114)
+  final String nameArabic;       // Arabic name
+  final String name;             // Localized name
+  final String meaning;          // Localized meaning
+  final int versesCount;         // Number of verses
+  final int pageStart;           // Starting page number
+  final RevelationType revelationType; // Meccan or Medinan
+  final String revelationCity;   // Localized city name (Mecca/Medina)
 }
 ```
 

@@ -38,6 +38,12 @@ mixin _$LocalizedSurahModel {
   /// Page number where this surah starts.
   int get pageStart => throw _privateConstructorUsedError;
 
+  /// Revelation type (Meccan or Medinan).
+  RevelationType get revelationType => throw _privateConstructorUsedError;
+
+  /// Localized revelation city name (Mecca/Medina in selected language).
+  String get revelationCity => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LocalizedSurahModelCopyWith<LocalizedSurahModel> get copyWith =>
@@ -56,7 +62,9 @@ abstract class $LocalizedSurahModelCopyWith<$Res> {
       String name,
       String meaning,
       int versesCount,
-      int pageStart});
+      int pageStart,
+      RevelationType revelationType,
+      String revelationCity});
 }
 
 /// @nodoc
@@ -78,6 +86,8 @@ class _$LocalizedSurahModelCopyWithImpl<$Res, $Val extends LocalizedSurahModel>
     Object? meaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
+    Object? revelationType = null,
+    Object? revelationCity = null,
   }) {
     return _then(_value.copyWith(
       number: null == number
@@ -104,6 +114,14 @@ class _$LocalizedSurahModelCopyWithImpl<$Res, $Val extends LocalizedSurahModel>
           ? _value.pageStart
           : pageStart // ignore: cast_nullable_to_non_nullable
               as int,
+      revelationType: null == revelationType
+          ? _value.revelationType
+          : revelationType // ignore: cast_nullable_to_non_nullable
+              as RevelationType,
+      revelationCity: null == revelationCity
+          ? _value.revelationCity
+          : revelationCity // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -122,7 +140,9 @@ abstract class _$$LocalizedSurahModelImplCopyWith<$Res>
       String name,
       String meaning,
       int versesCount,
-      int pageStart});
+      int pageStart,
+      RevelationType revelationType,
+      String revelationCity});
 }
 
 /// @nodoc
@@ -142,6 +162,8 @@ class __$$LocalizedSurahModelImplCopyWithImpl<$Res>
     Object? meaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
+    Object? revelationType = null,
+    Object? revelationCity = null,
   }) {
     return _then(_$LocalizedSurahModelImpl(
       number: null == number
@@ -168,6 +190,14 @@ class __$$LocalizedSurahModelImplCopyWithImpl<$Res>
           ? _value.pageStart
           : pageStart // ignore: cast_nullable_to_non_nullable
               as int,
+      revelationType: null == revelationType
+          ? _value.revelationType
+          : revelationType // ignore: cast_nullable_to_non_nullable
+              as RevelationType,
+      revelationCity: null == revelationCity
+          ? _value.revelationCity
+          : revelationCity // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -181,7 +211,9 @@ class _$LocalizedSurahModelImpl implements _LocalizedSurahModel {
       required this.name,
       required this.meaning,
       required this.versesCount,
-      required this.pageStart});
+      required this.pageStart,
+      required this.revelationType,
+      required this.revelationCity});
 
   factory _$LocalizedSurahModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalizedSurahModelImplFromJson(json);
@@ -210,9 +242,17 @@ class _$LocalizedSurahModelImpl implements _LocalizedSurahModel {
   @override
   final int pageStart;
 
+  /// Revelation type (Meccan or Medinan).
+  @override
+  final RevelationType revelationType;
+
+  /// Localized revelation city name (Mecca/Medina in selected language).
+  @override
+  final String revelationCity;
+
   @override
   String toString() {
-    return 'LocalizedSurahModel(number: $number, nameArabic: $nameArabic, name: $name, meaning: $meaning, versesCount: $versesCount, pageStart: $pageStart)';
+    return 'LocalizedSurahModel(number: $number, nameArabic: $nameArabic, name: $name, meaning: $meaning, versesCount: $versesCount, pageStart: $pageStart, revelationType: $revelationType, revelationCity: $revelationCity)';
   }
 
   @override
@@ -228,13 +268,17 @@ class _$LocalizedSurahModelImpl implements _LocalizedSurahModel {
             (identical(other.versesCount, versesCount) ||
                 other.versesCount == versesCount) &&
             (identical(other.pageStart, pageStart) ||
-                other.pageStart == pageStart));
+                other.pageStart == pageStart) &&
+            (identical(other.revelationType, revelationType) ||
+                other.revelationType == revelationType) &&
+            (identical(other.revelationCity, revelationCity) ||
+                other.revelationCity == revelationCity));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, number, nameArabic, name, meaning, versesCount, pageStart);
+  int get hashCode => Object.hash(runtimeType, number, nameArabic, name,
+      meaning, versesCount, pageStart, revelationType, revelationCity);
 
   @JsonKey(ignore: true)
   @override
@@ -258,7 +302,9 @@ abstract class _LocalizedSurahModel implements LocalizedSurahModel {
       required final String name,
       required final String meaning,
       required final int versesCount,
-      required final int pageStart}) = _$LocalizedSurahModelImpl;
+      required final int pageStart,
+      required final RevelationType revelationType,
+      required final String revelationCity}) = _$LocalizedSurahModelImpl;
 
   factory _LocalizedSurahModel.fromJson(Map<String, dynamic> json) =
       _$LocalizedSurahModelImpl.fromJson;
@@ -287,6 +333,14 @@ abstract class _LocalizedSurahModel implements LocalizedSurahModel {
 
   /// Page number where this surah starts.
   int get pageStart;
+  @override
+
+  /// Revelation type (Meccan or Medinan).
+  RevelationType get revelationType;
+  @override
+
+  /// Localized revelation city name (Mecca/Medina in selected language).
+  String get revelationCity;
   @override
   @JsonKey(ignore: true)
   _$$LocalizedSurahModelImplCopyWith<_$LocalizedSurahModelImpl> get copyWith =>

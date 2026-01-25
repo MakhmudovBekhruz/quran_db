@@ -7,6 +7,7 @@ import '../models/common/line_type.dart';
 import '../models/common/paginated_result_model.dart';
 import '../models/common/quran_language.dart';
 import '../models/common/quran_page_model.dart';
+import '../models/common/revelation_type.dart';
 import '../models/common/search_result_model.dart';
 import '../models/full/ayah_model.dart';
 import '../models/full/juz_model.dart';
@@ -42,6 +43,7 @@ class QuranRepositoryImpl implements QuranRepository {
       nameUzCyrMeaning: data.nameUzCyrMeaning,
       versesCount: data.versesCount,
       pageStart: data.pageStart,
+      revelationType: RevelationType.fromValue(data.revelationType),
     );
   }
 
@@ -89,25 +91,34 @@ class QuranRepositoryImpl implements QuranRepository {
     );
   }
 
-  LocalizedSurahModel _localizeSupah(SurahModel surah, QuranLanguage language) {
+  LocalizedSurahModel _localizeSurah(SurahModel surah, QuranLanguage language) {
     String name;
     String meaning;
+    String revelationCity;
     switch (language) {
       case QuranLanguage.english:
         name = surah.nameEn;
         meaning = surah.nameEnMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Mecca' : 'Medina';
         break;
       case QuranLanguage.russian:
         name = surah.nameRu;
         meaning = surah.nameRuMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Мекка' : 'Медина';
         break;
       case QuranLanguage.uzbekLatin:
         name = surah.nameUzLat;
         meaning = surah.nameUzLatMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Makka' : 'Madina';
         break;
       case QuranLanguage.uzbekCyrillic:
         name = surah.nameUzCyr;
         meaning = surah.nameUzCyrMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Макка' : 'Мадина';
         break;
     }
     return LocalizedSurahModel(
@@ -117,6 +128,8 @@ class QuranRepositoryImpl implements QuranRepository {
       meaning: meaning,
       versesCount: surah.versesCount,
       pageStart: surah.pageStart,
+      revelationType: surah.revelationType,
+      revelationCity: revelationCity,
     );
   }
 
@@ -280,7 +293,7 @@ class QuranRepositoryImpl implements QuranRepository {
   @override
   Future<List<LocalizedSurahModel>> getAllSurahs(QuranLanguage language) async {
     final surahs = await _getAllSurahsInternal();
-    return surahs.map((s) => _localizeSupah(s, language)).toList();
+    return surahs.map((s) => _localizeSurah(s, language)).toList();
   }
 
   @override
@@ -295,7 +308,7 @@ class QuranRepositoryImpl implements QuranRepository {
       throw SurahNotFoundException(surahNumber);
     }
 
-    return _localizeSupah(surah, language);
+    return _localizeSurah(surah, language);
   }
 
   @override
@@ -314,7 +327,7 @@ class QuranRepositoryImpl implements QuranRepository {
     final surahsInJuz = surahs
         .where((s) =>
             s.number >= juz.startSurahNumber && s.number <= juz.endSurahNumber)
-        .map((s) => _localizeSupah(s, language))
+        .map((s) => _localizeSurah(s, language))
         .toList();
 
     return surahsInJuz;

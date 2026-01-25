@@ -56,6 +56,9 @@ mixin _$SurahModel {
   /// Page number where this surah starts.
   int get pageStart => throw _privateConstructorUsedError;
 
+  /// Revelation type (Meccan or Medinan).
+  RevelationType get revelationType => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SurahModelCopyWith<SurahModel> get copyWith =>
@@ -80,7 +83,8 @@ abstract class $SurahModelCopyWith<$Res> {
       String nameUzLatMeaning,
       String nameUzCyrMeaning,
       int versesCount,
-      int pageStart});
+      int pageStart,
+      RevelationType revelationType});
 }
 
 /// @nodoc
@@ -108,6 +112,7 @@ class _$SurahModelCopyWithImpl<$Res, $Val extends SurahModel>
     Object? nameUzCyrMeaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
+    Object? revelationType = null,
   }) {
     return _then(_value.copyWith(
       number: null == number
@@ -158,6 +163,10 @@ class _$SurahModelCopyWithImpl<$Res, $Val extends SurahModel>
           ? _value.pageStart
           : pageStart // ignore: cast_nullable_to_non_nullable
               as int,
+      revelationType: null == revelationType
+          ? _value.revelationType
+          : revelationType // ignore: cast_nullable_to_non_nullable
+              as RevelationType,
     ) as $Val);
   }
 }
@@ -182,7 +191,8 @@ abstract class _$$SurahModelImplCopyWith<$Res>
       String nameUzLatMeaning,
       String nameUzCyrMeaning,
       int versesCount,
-      int pageStart});
+      int pageStart,
+      RevelationType revelationType});
 }
 
 /// @nodoc
@@ -208,6 +218,7 @@ class __$$SurahModelImplCopyWithImpl<$Res>
     Object? nameUzCyrMeaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
+    Object? revelationType = null,
   }) {
     return _then(_$SurahModelImpl(
       number: null == number
@@ -258,6 +269,10 @@ class __$$SurahModelImplCopyWithImpl<$Res>
           ? _value.pageStart
           : pageStart // ignore: cast_nullable_to_non_nullable
               as int,
+      revelationType: null == revelationType
+          ? _value.revelationType
+          : revelationType // ignore: cast_nullable_to_non_nullable
+              as RevelationType,
     ));
   }
 }
@@ -277,7 +292,8 @@ class _$SurahModelImpl implements _SurahModel {
       required this.nameUzLatMeaning,
       required this.nameUzCyrMeaning,
       required this.versesCount,
-      required this.pageStart});
+      required this.pageStart,
+      required this.revelationType});
 
   factory _$SurahModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SurahModelImplFromJson(json);
@@ -330,9 +346,13 @@ class _$SurahModelImpl implements _SurahModel {
   @override
   final int pageStart;
 
+  /// Revelation type (Meccan or Medinan).
+  @override
+  final RevelationType revelationType;
+
   @override
   String toString() {
-    return 'SurahModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, nameRu: $nameRu, nameUzLat: $nameUzLat, nameUzCyr: $nameUzCyr, nameEnMeaning: $nameEnMeaning, nameRuMeaning: $nameRuMeaning, nameUzLatMeaning: $nameUzLatMeaning, nameUzCyrMeaning: $nameUzCyrMeaning, versesCount: $versesCount, pageStart: $pageStart)';
+    return 'SurahModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, nameRu: $nameRu, nameUzLat: $nameUzLat, nameUzCyr: $nameUzCyr, nameEnMeaning: $nameEnMeaning, nameRuMeaning: $nameRuMeaning, nameUzLatMeaning: $nameUzLatMeaning, nameUzCyrMeaning: $nameUzCyrMeaning, versesCount: $versesCount, pageStart: $pageStart, revelationType: $revelationType)';
   }
 
   @override
@@ -359,7 +379,9 @@ class _$SurahModelImpl implements _SurahModel {
             (identical(other.versesCount, versesCount) ||
                 other.versesCount == versesCount) &&
             (identical(other.pageStart, pageStart) ||
-                other.pageStart == pageStart));
+                other.pageStart == pageStart) &&
+            (identical(other.revelationType, revelationType) ||
+                other.revelationType == revelationType));
   }
 
   @JsonKey(ignore: true)
@@ -377,7 +399,8 @@ class _$SurahModelImpl implements _SurahModel {
       nameUzLatMeaning,
       nameUzCyrMeaning,
       versesCount,
-      pageStart);
+      pageStart,
+      revelationType);
 
   @JsonKey(ignore: true)
   @override
@@ -406,7 +429,8 @@ abstract class _SurahModel implements SurahModel {
       required final String nameUzLatMeaning,
       required final String nameUzCyrMeaning,
       required final int versesCount,
-      required final int pageStart}) = _$SurahModelImpl;
+      required final int pageStart,
+      required final RevelationType revelationType}) = _$SurahModelImpl;
 
   factory _SurahModel.fromJson(Map<String, dynamic> json) =
       _$SurahModelImpl.fromJson;
@@ -459,6 +483,10 @@ abstract class _SurahModel implements SurahModel {
 
   /// Page number where this surah starts.
   int get pageStart;
+  @override
+
+  /// Revelation type (Meccan or Medinan).
+  RevelationType get revelationType;
   @override
   @JsonKey(ignore: true)
   _$$SurahModelImplCopyWith<_$SurahModelImpl> get copyWith =>

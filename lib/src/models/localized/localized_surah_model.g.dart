@@ -15,6 +15,9 @@ _$LocalizedSurahModelImpl _$$LocalizedSurahModelImplFromJson(
       meaning: json['meaning'] as String,
       versesCount: (json['versesCount'] as num).toInt(),
       pageStart: (json['pageStart'] as num).toInt(),
+      revelationType:
+          $enumDecode(_$RevelationTypeEnumMap, json['revelationType']),
+      revelationCity: json['revelationCity'] as String,
     );
 
 Map<String, dynamic> _$$LocalizedSurahModelImplToJson(
@@ -26,4 +29,11 @@ Map<String, dynamic> _$$LocalizedSurahModelImplToJson(
       'meaning': instance.meaning,
       'versesCount': instance.versesCount,
       'pageStart': instance.pageStart,
+      'revelationType': _$RevelationTypeEnumMap[instance.revelationType]!,
+      'revelationCity': instance.revelationCity,
     };
+
+const _$RevelationTypeEnumMap = {
+  RevelationType.meccan: 'meccan',
+  RevelationType.medinan: 'medinan',
+};

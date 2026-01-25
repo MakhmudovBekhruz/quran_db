@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../common/revelation_type.dart';
+
 part 'localized_surah_model.freezed.dart';
 part 'localized_surah_model.g.dart';
 
@@ -24,6 +26,12 @@ class LocalizedSurahModel with _$LocalizedSurahModel {
 
     /// Page number where this surah starts.
     required int pageStart,
+
+    /// Revelation type (Meccan or Medinan).
+    required RevelationType revelationType,
+
+    /// Localized revelation city name (Mecca/Medina in selected language).
+    required String revelationCity,
   }) = _LocalizedSurahModel;
 
   factory LocalizedSurahModel.fromJson(Map<String, dynamic> json) =>

@@ -20,6 +20,8 @@ _$SurahModelImpl _$$SurahModelImplFromJson(Map<String, dynamic> json) =>
       nameUzCyrMeaning: json['nameUzCyrMeaning'] as String,
       versesCount: (json['versesCount'] as num).toInt(),
       pageStart: (json['pageStart'] as num).toInt(),
+      revelationType:
+          $enumDecode(_$RevelationTypeEnumMap, json['revelationType']),
     );
 
 Map<String, dynamic> _$$SurahModelImplToJson(_$SurahModelImpl instance) =>
@@ -36,4 +38,10 @@ Map<String, dynamic> _$$SurahModelImplToJson(_$SurahModelImpl instance) =>
       'nameUzCyrMeaning': instance.nameUzCyrMeaning,
       'versesCount': instance.versesCount,
       'pageStart': instance.pageStart,
+      'revelationType': _$RevelationTypeEnumMap[instance.revelationType]!,
     };
+
+const _$RevelationTypeEnumMap = {
+  RevelationType.meccan: 'meccan',
+  RevelationType.medinan: 'medinan',
+};

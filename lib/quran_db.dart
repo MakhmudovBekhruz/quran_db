@@ -36,6 +36,7 @@ export 'src/models/localized/localized_juz_model.dart';
 // Common models
 export 'src/models/common/quran_language.dart';
 export 'src/models/common/line_type.dart';
+export 'src/models/common/revelation_type.dart';
 export 'src/models/common/quran_page_model.dart';
 export 'src/models/common/paginated_result_model.dart';
 export 'src/models/common/search_result_model.dart';
