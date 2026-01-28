@@ -59,7 +59,10 @@ abstract class QuranRepository {
   /// Gets a complete Quran page with all its lines and words.
   ///
   /// Throws [PageNotFoundException] if the page does not exist.
-  Future<QuranPageModel> getPageByNumber(int pageNumber);
+  Future<QuranPageModel> getPageByNumber(
+    int pageNumber,
+    QuranLanguage language,
+  );
 
   // ============ Search Methods ============
 

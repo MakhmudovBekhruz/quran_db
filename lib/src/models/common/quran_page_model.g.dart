@@ -12,6 +12,15 @@ _$QuranPageModelImpl _$$QuranPageModelImplFromJson(Map<String, dynamic> json) =>
       lines: (json['lines'] as List<dynamic>)
           .map((e) => QuranPageLineModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      surahs: (json['surahs'] as List<dynamic>)
+          .map((e) => LocalizedSurahModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      juzList: (json['juzList'] as List<dynamic>)
+          .map((e) => LocalizedJuzModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      ayahs: (json['ayahs'] as List<dynamic>)
+          .map((e) => LocalizedAyahModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$QuranPageModelImplToJson(
@@ -19,6 +28,9 @@ Map<String, dynamic> _$$QuranPageModelImplToJson(
     <String, dynamic>{
       'pageNumber': instance.pageNumber,
       'lines': instance.lines,
+      'surahs': instance.surahs,
+      'juzList': instance.juzList,
+      'ayahs': instance.ayahs,
     };
 
 _$QuranPageLineModelImpl _$$QuranPageLineModelImplFromJson(

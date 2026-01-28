@@ -392,24 +392,91 @@ class QuranRepositoryImpl implements QuranRepository {
   // ============ Page Methods ============
 
   @override
-  Future<QuranPageModel> getPageByNumber(int pageNumber) async {
+  Future<QuranPageModel> getPageByNumber(
+    int pageNumber,
+    QuranLanguage language,
+  ) async {
     final linesData = await _database.getLinesByPage(pageNumber);
 
     if (linesData.isEmpty) {
       throw PageNotFoundException(pageNumber);
     }
 
+    // Build line + word structure
     final lines = <QuranPageLineModel>[];
-
     for (final lineData in linesData) {
       final line = _lineDataToModel(lineData);
       final wordsData = await _database.getWordsByLine(lineData.id);
       final words = wordsData.map(_wordDataToModel).toList();
-
       lines.add(QuranPageLineModel(line: line, words: words));
     }
 
-    return QuranPageModel(pageNumber: pageNumber, lines: lines);
+    // Preload surah and juz metadata
+    final allSurahs = await _getAllSurahsInternal();
+    final surahByNumber = {
+      for (final s in allSurahs) s.number: s,
+    };
+    final allJuz = await _getAllJuzInternal();
+
+    // Track ayah ranges on this page per surah
+    final minAyahBySurah = <int, int>{};
+    final maxAyahBySurah = <int, int>{};
+
+    for (final line in linesData) {
+      _updatePageAyahRangeForLine(
+        line.verseRange,
+        surahByNumber,
+        minAyahBySurah,
+        maxAyahBySurah,
+      );
+    }
+
+    // Build localized surah list for this page (ascending by surah number)
+    final localizedSurahs = <LocalizedSurahModel>[];
+    final surahNumbersOnPage = minAyahBySurah.keys.toList()..sort();
+    for (final surahNumber in surahNumbersOnPage) {
+      final surah = surahByNumber[surahNumber];
+      if (surah != null) {
+        localizedSurahs.add(_localizeSurah(surah, language));
+      }
+    }
+
+    // Build localized juz list for this page (ascending by juz number)
+    final localizedJuzList = <LocalizedJuzModel>[];
+    for (final juz in allJuz) {
+      if (_pageIntersectsJuz(juz, minAyahBySurah, maxAyahBySurah)) {
+        localizedJuzList.add(_localizeJuz(juz));
+      }
+    }
+    localizedJuzList.sort((a, b) => a.number.compareTo(b.number));
+
+    // Build localized ayah list for this page (ascending by surah, then ayah)
+    final localizedAyahs = <LocalizedAyahModel>[];
+    for (final surahNumber in surahNumbersOnPage) {
+      final minAyah = minAyahBySurah[surahNumber]!;
+      final maxAyah = maxAyahBySurah[surahNumber]!;
+
+      final ayahsInSurah =
+          List<AyahModel>.from(await _getAyahsBySurahInternal(surahNumber));
+      ayahsInSurah.sort(
+        (a, b) => a.ayahNumber.compareTo(b.ayahNumber),
+      );
+
+      for (final ayah in ayahsInSurah) {
+        if (ayah.ayahNumber < minAyah || ayah.ayahNumber > maxAyah) {
+          continue;
+        }
+        localizedAyahs.add(_localizeAyah(ayah, language));
+      }
+    }
+
+    return QuranPageModel(
+      pageNumber: pageNumber,
+      lines: lines,
+      surahs: localizedSurahs,
+      juzList: localizedJuzList,
+      ayahs: localizedAyahs,
+    );
   }
 
   // ============ Search Methods ============
@@ -875,6 +942,176 @@ class QuranRepositoryImpl implements QuranRepository {
       }
     }
 
+    return false;
+  }
+
+  /// Updates the per-surah ayah range maps for a given line's verse range.
+  ///
+  /// The [verseRange] string has formats like:
+  /// - "2:255"
+  /// - "2:255-2:256"
+  /// - "1:1-2:5"
+  void _updatePageAyahRangeForLine(
+    String verseRange,
+    Map<int, SurahModel> surahByNumber,
+    Map<int, int> minAyahBySurah,
+    Map<int, int> maxAyahBySurah,
+  ) {
+    if (verseRange.isEmpty) return;
+
+    final parts = verseRange.split('-');
+
+    if (parts.length == 1) {
+      final location = _parseVerseLocation(parts[0]);
+      if (location == null) return;
+      _addAyahRangeToSurah(
+        location.$1,
+        location.$2,
+        location.$2,
+        minAyahBySurah,
+        maxAyahBySurah,
+        surahByNumber,
+      );
+    } else if (parts.length == 2) {
+      final start = _parseVerseLocation(parts[0]);
+      final end = _parseVerseLocation(parts[1]);
+      if (start == null || end == null) return;
+
+      final startSurah = start.$1;
+      final startAyah = start.$2;
+      final endSurah = end.$1;
+      final endAyah = end.$2;
+
+      if (startSurah == endSurah) {
+        _addAyahRangeToSurah(
+          startSurah,
+          startAyah,
+          endAyah,
+          minAyahBySurah,
+          maxAyahBySurah,
+          surahByNumber,
+        );
+      } else {
+        final fromSurah = startSurah < endSurah ? startSurah : endSurah;
+        final toSurah = startSurah < endSurah ? endSurah : startSurah;
+
+        for (int surahNumber = fromSurah;
+            surahNumber <= toSurah;
+            surahNumber++) {
+          final surah = surahByNumber[surahNumber];
+          if (surah == null) continue;
+
+          int minAyah;
+          int maxAyah;
+
+          if (surahNumber == startSurah) {
+            minAyah = startAyah;
+            maxAyah = surah.versesCount;
+          } else if (surahNumber == endSurah) {
+            minAyah = 1;
+            maxAyah = endAyah;
+          } else {
+            minAyah = 1;
+            maxAyah = surah.versesCount;
+          }
+
+          _addAyahRangeToSurah(
+            surahNumber,
+            minAyah,
+            maxAyah,
+            minAyahBySurah,
+            maxAyahBySurah,
+            surahByNumber,
+          );
+        }
+      }
+    }
+  }
+
+  void _addAyahRangeToSurah(
+    int surahNumber,
+    int startAyah,
+    int endAyah,
+    Map<int, int> minAyahBySurah,
+    Map<int, int> maxAyahBySurah,
+    Map<int, SurahModel> surahByNumber,
+  ) {
+    if (startAyah > endAyah) {
+      final temp = startAyah;
+      startAyah = endAyah;
+      endAyah = temp;
+    }
+
+    final surah = surahByNumber[surahNumber];
+    if (surah != null) {
+      if (startAyah < 1) startAyah = 1;
+      if (endAyah > surah.versesCount) endAyah = surah.versesCount;
+    }
+
+    final currentMin = minAyahBySurah[surahNumber];
+    final currentMax = maxAyahBySurah[surahNumber];
+
+    if (currentMin == null || startAyah < currentMin) {
+      minAyahBySurah[surahNumber] = startAyah;
+    }
+    if (currentMax == null || endAyah > currentMax) {
+      maxAyahBySurah[surahNumber] = endAyah;
+    }
+  }
+
+  int _compareVersePosition(
+    int surahA,
+    int ayahA,
+    int surahB,
+    int ayahB,
+  ) {
+    if (surahA != surahB) {
+      return surahA.compareTo(surahB);
+    }
+    return ayahA.compareTo(ayahB);
+  }
+
+  bool _intervalsOverlap(
+    int startSurahA,
+    int startAyahA,
+    int endSurahA,
+    int endAyahA,
+    int startSurahB,
+    int startAyahB,
+    int endSurahB,
+    int endAyahB,
+  ) {
+    final aStartVsBEnd =
+        _compareVersePosition(startSurahA, startAyahA, endSurahB, endAyahB);
+    final bStartVsAEnd =
+        _compareVersePosition(startSurahB, startAyahB, endSurahA, endAyahA);
+
+    return aStartVsBEnd <= 0 && bStartVsAEnd <= 0;
+  }
+
+  bool _pageIntersectsJuz(
+    JuzModel juz,
+    Map<int, int> minAyahBySurah,
+    Map<int, int> maxAyahBySurah,
+  ) {
+    for (final entry in minAyahBySurah.entries) {
+      final surahNumber = entry.key;
+      final minAyah = entry.value;
+      final maxAyah = maxAyahBySurah[surahNumber]!;
+
+      if (_intervalsOverlap(
+        juz.startSurahNumber,
+        juz.startAyahNumber,
+        juz.endSurahNumber,
+        juz.endAyahNumber,
+        surahNumber,
+        minAyah,
+        surahNumber,
+        maxAyah,
+      )) {
+        return true;
+      }
+    }
     return false;
   }
 

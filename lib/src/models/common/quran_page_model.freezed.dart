@@ -26,6 +26,21 @@ mixin _$QuranPageModel {
   /// List of lines on this page with their words.
   List<QuranPageLineModel> get lines => throw _privateConstructorUsedError;
 
+  /// List of surahs that have at least one ayah on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedSurahModel> get surahs => throw _privateConstructorUsedError;
+
+  /// List of juz that intersect with this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedJuzModel> get juzList => throw _privateConstructorUsedError;
+
+  /// List of ayahs that appear (even partially) on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedAyahModel> get ayahs => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $QuranPageModelCopyWith<QuranPageModel> get copyWith =>
@@ -38,7 +53,12 @@ abstract class $QuranPageModelCopyWith<$Res> {
           QuranPageModel value, $Res Function(QuranPageModel) then) =
       _$QuranPageModelCopyWithImpl<$Res, QuranPageModel>;
   @useResult
-  $Res call({int pageNumber, List<QuranPageLineModel> lines});
+  $Res call(
+      {int pageNumber,
+      List<QuranPageLineModel> lines,
+      List<LocalizedSurahModel> surahs,
+      List<LocalizedJuzModel> juzList,
+      List<LocalizedAyahModel> ayahs});
 }
 
 /// @nodoc
@@ -56,6 +76,9 @@ class _$QuranPageModelCopyWithImpl<$Res, $Val extends QuranPageModel>
   $Res call({
     Object? pageNumber = null,
     Object? lines = null,
+    Object? surahs = null,
+    Object? juzList = null,
+    Object? ayahs = null,
   }) {
     return _then(_value.copyWith(
       pageNumber: null == pageNumber
@@ -66,6 +89,18 @@ class _$QuranPageModelCopyWithImpl<$Res, $Val extends QuranPageModel>
           ? _value.lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<QuranPageLineModel>,
+      surahs: null == surahs
+          ? _value.surahs
+          : surahs // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedSurahModel>,
+      juzList: null == juzList
+          ? _value.juzList
+          : juzList // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedJuzModel>,
+      ayahs: null == ayahs
+          ? _value.ayahs
+          : ayahs // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedAyahModel>,
     ) as $Val);
   }
 }
@@ -78,7 +113,12 @@ abstract class _$$QuranPageModelImplCopyWith<$Res>
       __$$QuranPageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int pageNumber, List<QuranPageLineModel> lines});
+  $Res call(
+      {int pageNumber,
+      List<QuranPageLineModel> lines,
+      List<LocalizedSurahModel> surahs,
+      List<LocalizedJuzModel> juzList,
+      List<LocalizedAyahModel> ayahs});
 }
 
 /// @nodoc
@@ -94,6 +134,9 @@ class __$$QuranPageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? pageNumber = null,
     Object? lines = null,
+    Object? surahs = null,
+    Object? juzList = null,
+    Object? ayahs = null,
   }) {
     return _then(_$QuranPageModelImpl(
       pageNumber: null == pageNumber
@@ -104,6 +147,18 @@ class __$$QuranPageModelImplCopyWithImpl<$Res>
           ? _value._lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<QuranPageLineModel>,
+      surahs: null == surahs
+          ? _value._surahs
+          : surahs // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedSurahModel>,
+      juzList: null == juzList
+          ? _value._juzList
+          : juzList // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedJuzModel>,
+      ayahs: null == ayahs
+          ? _value._ayahs
+          : ayahs // ignore: cast_nullable_to_non_nullable
+              as List<LocalizedAyahModel>,
     ));
   }
 }
@@ -112,8 +167,15 @@ class __$$QuranPageModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$QuranPageModelImpl implements _QuranPageModel {
   const _$QuranPageModelImpl(
-      {required this.pageNumber, required final List<QuranPageLineModel> lines})
-      : _lines = lines;
+      {required this.pageNumber,
+      required final List<QuranPageLineModel> lines,
+      required final List<LocalizedSurahModel> surahs,
+      required final List<LocalizedJuzModel> juzList,
+      required final List<LocalizedAyahModel> ayahs})
+      : _lines = lines,
+        _surahs = surahs,
+        _juzList = juzList,
+        _ayahs = ayahs;
 
   factory _$QuranPageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuranPageModelImplFromJson(json);
@@ -133,9 +195,54 @@ class _$QuranPageModelImpl implements _QuranPageModel {
     return EqualUnmodifiableListView(_lines);
   }
 
+  /// List of surahs that have at least one ayah on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  final List<LocalizedSurahModel> _surahs;
+
+  /// List of surahs that have at least one ayah on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  @override
+  List<LocalizedSurahModel> get surahs {
+    if (_surahs is EqualUnmodifiableListView) return _surahs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_surahs);
+  }
+
+  /// List of juz that intersect with this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  final List<LocalizedJuzModel> _juzList;
+
+  /// List of juz that intersect with this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  @override
+  List<LocalizedJuzModel> get juzList {
+    if (_juzList is EqualUnmodifiableListView) return _juzList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_juzList);
+  }
+
+  /// List of ayahs that appear (even partially) on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  final List<LocalizedAyahModel> _ayahs;
+
+  /// List of ayahs that appear (even partially) on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  @override
+  List<LocalizedAyahModel> get ayahs {
+    if (_ayahs is EqualUnmodifiableListView) return _ayahs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ayahs);
+  }
+
   @override
   String toString() {
-    return 'QuranPageModel(pageNumber: $pageNumber, lines: $lines)';
+    return 'QuranPageModel(pageNumber: $pageNumber, lines: $lines, surahs: $surahs, juzList: $juzList, ayahs: $ayahs)';
   }
 
   @override
@@ -145,13 +252,21 @@ class _$QuranPageModelImpl implements _QuranPageModel {
             other is _$QuranPageModelImpl &&
             (identical(other.pageNumber, pageNumber) ||
                 other.pageNumber == pageNumber) &&
-            const DeepCollectionEquality().equals(other._lines, _lines));
+            const DeepCollectionEquality().equals(other._lines, _lines) &&
+            const DeepCollectionEquality().equals(other._surahs, _surahs) &&
+            const DeepCollectionEquality().equals(other._juzList, _juzList) &&
+            const DeepCollectionEquality().equals(other._ayahs, _ayahs));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, pageNumber, const DeepCollectionEquality().hash(_lines));
+      runtimeType,
+      pageNumber,
+      const DeepCollectionEquality().hash(_lines),
+      const DeepCollectionEquality().hash(_surahs),
+      const DeepCollectionEquality().hash(_juzList),
+      const DeepCollectionEquality().hash(_ayahs));
 
   @JsonKey(ignore: true)
   @override
@@ -171,7 +286,10 @@ class _$QuranPageModelImpl implements _QuranPageModel {
 abstract class _QuranPageModel implements QuranPageModel {
   const factory _QuranPageModel(
       {required final int pageNumber,
-      required final List<QuranPageLineModel> lines}) = _$QuranPageModelImpl;
+      required final List<QuranPageLineModel> lines,
+      required final List<LocalizedSurahModel> surahs,
+      required final List<LocalizedJuzModel> juzList,
+      required final List<LocalizedAyahModel> ayahs}) = _$QuranPageModelImpl;
 
   factory _QuranPageModel.fromJson(Map<String, dynamic> json) =
       _$QuranPageModelImpl.fromJson;
@@ -184,6 +302,24 @@ abstract class _QuranPageModel implements QuranPageModel {
 
   /// List of lines on this page with their words.
   List<QuranPageLineModel> get lines;
+  @override
+
+  /// List of surahs that have at least one ayah on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedSurahModel> get surahs;
+  @override
+
+  /// List of juz that intersect with this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedJuzModel> get juzList;
+  @override
+
+  /// List of ayahs that appear (even partially) on this page.
+  ///
+  /// Localized to the requested [QuranLanguage] when fetched from the repository.
+  List<LocalizedAyahModel> get ayahs;
   @override
   @JsonKey(ignore: true)
   _$$QuranPageModelImplCopyWith<_$QuranPageModelImpl> get copyWith =>
