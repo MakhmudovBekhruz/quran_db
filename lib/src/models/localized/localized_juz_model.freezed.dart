@@ -41,6 +41,9 @@ mixin _$LocalizedJuzModel {
   /// Ending ayah number.
   int get endAyahNumber => throw _privateConstructorUsedError;
 
+  /// Page number where this juz starts.
+  int get pageStart => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $LocalizedJuzModelCopyWith<LocalizedJuzModel> get copyWith =>
@@ -60,7 +63,8 @@ abstract class $LocalizedJuzModelCopyWith<$Res> {
       int startSurahNumber,
       int startAyahNumber,
       int endSurahNumber,
-      int endAyahNumber});
+      int endAyahNumber,
+      int pageStart});
 }
 
 /// @nodoc
@@ -83,6 +87,7 @@ class _$LocalizedJuzModelCopyWithImpl<$Res, $Val extends LocalizedJuzModel>
     Object? startAyahNumber = null,
     Object? endSurahNumber = null,
     Object? endAyahNumber = null,
+    Object? pageStart = null,
   }) {
     return _then(_value.copyWith(
       number: null == number
@@ -113,6 +118,10 @@ class _$LocalizedJuzModelCopyWithImpl<$Res, $Val extends LocalizedJuzModel>
           ? _value.endAyahNumber
           : endAyahNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      pageStart: null == pageStart
+          ? _value.pageStart
+          : pageStart // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -132,7 +141,8 @@ abstract class _$$LocalizedJuzModelImplCopyWith<$Res>
       int startSurahNumber,
       int startAyahNumber,
       int endSurahNumber,
-      int endAyahNumber});
+      int endAyahNumber,
+      int pageStart});
 }
 
 /// @nodoc
@@ -153,6 +163,7 @@ class __$$LocalizedJuzModelImplCopyWithImpl<$Res>
     Object? startAyahNumber = null,
     Object? endSurahNumber = null,
     Object? endAyahNumber = null,
+    Object? pageStart = null,
   }) {
     return _then(_$LocalizedJuzModelImpl(
       number: null == number
@@ -183,6 +194,10 @@ class __$$LocalizedJuzModelImplCopyWithImpl<$Res>
           ? _value.endAyahNumber
           : endAyahNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      pageStart: null == pageStart
+          ? _value.pageStart
+          : pageStart // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -197,7 +212,8 @@ class _$LocalizedJuzModelImpl implements _LocalizedJuzModel {
       required this.startSurahNumber,
       required this.startAyahNumber,
       required this.endSurahNumber,
-      required this.endAyahNumber});
+      required this.endAyahNumber,
+      required this.pageStart});
 
   factory _$LocalizedJuzModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalizedJuzModelImplFromJson(json);
@@ -230,9 +246,13 @@ class _$LocalizedJuzModelImpl implements _LocalizedJuzModel {
   @override
   final int endAyahNumber;
 
+  /// Page number where this juz starts.
+  @override
+  final int pageStart;
+
   @override
   String toString() {
-    return 'LocalizedJuzModel(number: $number, nameArabic: $nameArabic, name: $name, startSurahNumber: $startSurahNumber, startAyahNumber: $startAyahNumber, endSurahNumber: $endSurahNumber, endAyahNumber: $endAyahNumber)';
+    return 'LocalizedJuzModel(number: $number, nameArabic: $nameArabic, name: $name, startSurahNumber: $startSurahNumber, startAyahNumber: $startAyahNumber, endSurahNumber: $endSurahNumber, endAyahNumber: $endAyahNumber, pageStart: $pageStart)';
   }
 
   @override
@@ -251,13 +271,23 @@ class _$LocalizedJuzModelImpl implements _LocalizedJuzModel {
             (identical(other.endSurahNumber, endSurahNumber) ||
                 other.endSurahNumber == endSurahNumber) &&
             (identical(other.endAyahNumber, endAyahNumber) ||
-                other.endAyahNumber == endAyahNumber));
+                other.endAyahNumber == endAyahNumber) &&
+            (identical(other.pageStart, pageStart) ||
+                other.pageStart == pageStart));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, number, nameArabic, name,
-      startSurahNumber, startAyahNumber, endSurahNumber, endAyahNumber);
+  int get hashCode => Object.hash(
+      runtimeType,
+      number,
+      nameArabic,
+      name,
+      startSurahNumber,
+      startAyahNumber,
+      endSurahNumber,
+      endAyahNumber,
+      pageStart);
 
   @JsonKey(ignore: true)
   @override
@@ -282,7 +312,8 @@ abstract class _LocalizedJuzModel implements LocalizedJuzModel {
       required final int startSurahNumber,
       required final int startAyahNumber,
       required final int endSurahNumber,
-      required final int endAyahNumber}) = _$LocalizedJuzModelImpl;
+      required final int endAyahNumber,
+      required final int pageStart}) = _$LocalizedJuzModelImpl;
 
   factory _LocalizedJuzModel.fromJson(Map<String, dynamic> json) =
       _$LocalizedJuzModelImpl.fromJson;
@@ -315,6 +346,10 @@ abstract class _LocalizedJuzModel implements LocalizedJuzModel {
 
   /// Ending ayah number.
   int get endAyahNumber;
+  @override
+
+  /// Page number where this juz starts.
+  int get pageStart;
   @override
   @JsonKey(ignore: true)
   _$$LocalizedJuzModelImplCopyWith<_$LocalizedJuzModelImpl> get copyWith =>

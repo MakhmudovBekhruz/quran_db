@@ -27,6 +27,9 @@ class LocalizedJuzModel with _$LocalizedJuzModel {
 
     /// Ending ayah number.
     required int endAyahNumber,
+
+    /// Page number where this juz starts.
+    required int pageStart,
   }) = _LocalizedJuzModel;
 
   factory LocalizedJuzModel.fromJson(Map<String, dynamic> json) =>

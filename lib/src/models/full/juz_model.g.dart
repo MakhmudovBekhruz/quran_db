@@ -15,6 +15,7 @@ _$JuzModelImpl _$$JuzModelImplFromJson(Map<String, dynamic> json) =>
       startAyahNumber: (json['startAyahNumber'] as num).toInt(),
       endSurahNumber: (json['endSurahNumber'] as num).toInt(),
       endAyahNumber: (json['endAyahNumber'] as num).toInt(),
+      pageStart: (json['pageStart'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$JuzModelImplToJson(_$JuzModelImpl instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$JuzModelImplToJson(_$JuzModelImpl instance) =>
       'startAyahNumber': instance.startAyahNumber,
       'endSurahNumber': instance.endSurahNumber,
       'endAyahNumber': instance.endAyahNumber,
+      'pageStart': instance.pageStart,
     };

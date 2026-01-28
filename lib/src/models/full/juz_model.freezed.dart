@@ -41,6 +41,9 @@ mixin _$JuzModel {
   /// Ending ayah number.
   int get endAyahNumber => throw _privateConstructorUsedError;
 
+  /// Page number where this juz starts.
+  int get pageStart => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $JuzModelCopyWith<JuzModel> get copyWith =>
@@ -59,7 +62,8 @@ abstract class $JuzModelCopyWith<$Res> {
       int startSurahNumber,
       int startAyahNumber,
       int endSurahNumber,
-      int endAyahNumber});
+      int endAyahNumber,
+      int pageStart});
 }
 
 /// @nodoc
@@ -82,6 +86,7 @@ class _$JuzModelCopyWithImpl<$Res, $Val extends JuzModel>
     Object? startAyahNumber = null,
     Object? endSurahNumber = null,
     Object? endAyahNumber = null,
+    Object? pageStart = null,
   }) {
     return _then(_value.copyWith(
       number: null == number
@@ -112,6 +117,10 @@ class _$JuzModelCopyWithImpl<$Res, $Val extends JuzModel>
           ? _value.endAyahNumber
           : endAyahNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      pageStart: null == pageStart
+          ? _value.pageStart
+          : pageStart // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -131,7 +140,8 @@ abstract class _$$JuzModelImplCopyWith<$Res>
       int startSurahNumber,
       int startAyahNumber,
       int endSurahNumber,
-      int endAyahNumber});
+      int endAyahNumber,
+      int pageStart});
 }
 
 /// @nodoc
@@ -152,6 +162,7 @@ class __$$JuzModelImplCopyWithImpl<$Res>
     Object? startAyahNumber = null,
     Object? endSurahNumber = null,
     Object? endAyahNumber = null,
+    Object? pageStart = null,
   }) {
     return _then(_$JuzModelImpl(
       number: null == number
@@ -182,6 +193,10 @@ class __$$JuzModelImplCopyWithImpl<$Res>
           ? _value.endAyahNumber
           : endAyahNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      pageStart: null == pageStart
+          ? _value.pageStart
+          : pageStart // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -196,7 +211,8 @@ class _$JuzModelImpl implements _JuzModel {
       required this.startSurahNumber,
       required this.startAyahNumber,
       required this.endSurahNumber,
-      required this.endAyahNumber});
+      required this.endAyahNumber,
+      required this.pageStart});
 
   factory _$JuzModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$JuzModelImplFromJson(json);
@@ -229,9 +245,13 @@ class _$JuzModelImpl implements _JuzModel {
   @override
   final int endAyahNumber;
 
+  /// Page number where this juz starts.
+  @override
+  final int pageStart;
+
   @override
   String toString() {
-    return 'JuzModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, startSurahNumber: $startSurahNumber, startAyahNumber: $startAyahNumber, endSurahNumber: $endSurahNumber, endAyahNumber: $endAyahNumber)';
+    return 'JuzModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, startSurahNumber: $startSurahNumber, startAyahNumber: $startAyahNumber, endSurahNumber: $endSurahNumber, endAyahNumber: $endAyahNumber, pageStart: $pageStart)';
   }
 
   @override
@@ -249,13 +269,23 @@ class _$JuzModelImpl implements _JuzModel {
             (identical(other.endSurahNumber, endSurahNumber) ||
                 other.endSurahNumber == endSurahNumber) &&
             (identical(other.endAyahNumber, endAyahNumber) ||
-                other.endAyahNumber == endAyahNumber));
+                other.endAyahNumber == endAyahNumber) &&
+            (identical(other.pageStart, pageStart) ||
+                other.pageStart == pageStart));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, number, nameAr, nameEn,
-      startSurahNumber, startAyahNumber, endSurahNumber, endAyahNumber);
+  int get hashCode => Object.hash(
+      runtimeType,
+      number,
+      nameAr,
+      nameEn,
+      startSurahNumber,
+      startAyahNumber,
+      endSurahNumber,
+      endAyahNumber,
+      pageStart);
 
   @JsonKey(ignore: true)
   @override
@@ -279,7 +309,8 @@ abstract class _JuzModel implements JuzModel {
       required final int startSurahNumber,
       required final int startAyahNumber,
       required final int endSurahNumber,
-      required final int endAyahNumber}) = _$JuzModelImpl;
+      required final int endAyahNumber,
+      required final int pageStart}) = _$JuzModelImpl;
 
   factory _JuzModel.fromJson(Map<String, dynamic> json) =
       _$JuzModelImpl.fromJson;
@@ -312,6 +343,10 @@ abstract class _JuzModel implements JuzModel {
 
   /// Ending ayah number.
   int get endAyahNumber;
+  @override
+
+  /// Page number where this juz starts.
+  int get pageStart;
   @override
   @JsonKey(ignore: true)
   _$$JuzModelImplCopyWith<_$JuzModelImpl> get copyWith =>
