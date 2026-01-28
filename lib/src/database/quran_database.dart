@@ -45,6 +45,7 @@ class Juz extends Table {
   TextColumn get nameAr => text().named('name_ar')();
   TextColumn get nameEn => text().named('name_en')();
   IntColumn get startSurahNumber => integer().named('start_surah_number')();
+  IntColumn get pageStart => integer().named('page_start')();
   IntColumn get startAyahNumber => integer().named('start_ayah_number')();
   IntColumn get endSurahNumber => integer().named('end_surah_number')();
   IntColumn get endAyahNumber => integer().named('end_ayah_number')();

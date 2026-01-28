@@ -1006,6 +1006,12 @@ class $JuzTable extends Juz with TableInfo<$JuzTable, JuzData> {
   late final GeneratedColumn<int> startSurahNumber = GeneratedColumn<int>(
       'start_surah_number', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _pageStartMeta =
+      const VerificationMeta('pageStart');
+  @override
+  late final GeneratedColumn<int> pageStart = GeneratedColumn<int>(
+      'page_start', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _startAyahNumberMeta =
       const VerificationMeta('startAyahNumber');
   @override
@@ -1030,6 +1036,7 @@ class $JuzTable extends Juz with TableInfo<$JuzTable, JuzData> {
         nameAr,
         nameEn,
         startSurahNumber,
+        pageStart,
         startAyahNumber,
         endSurahNumber,
         endAyahNumber
@@ -1067,6 +1074,12 @@ class $JuzTable extends Juz with TableInfo<$JuzTable, JuzData> {
               data['start_surah_number']!, _startSurahNumberMeta));
     } else if (isInserting) {
       context.missing(_startSurahNumberMeta);
+    }
+    if (data.containsKey('page_start')) {
+      context.handle(_pageStartMeta,
+          pageStart.isAcceptableOrUnknown(data['page_start']!, _pageStartMeta));
+    } else if (isInserting) {
+      context.missing(_pageStartMeta);
     }
     if (data.containsKey('start_ayah_number')) {
       context.handle(
@@ -1109,6 +1122,8 @@ class $JuzTable extends Juz with TableInfo<$JuzTable, JuzData> {
           .read(DriftSqlType.string, data['${effectivePrefix}name_en'])!,
       startSurahNumber: attachedDatabase.typeMapping.read(
           DriftSqlType.int, data['${effectivePrefix}start_surah_number'])!,
+      pageStart: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}page_start'])!,
       startAyahNumber: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}start_ayah_number'])!,
       endSurahNumber: attachedDatabase.typeMapping
@@ -1129,6 +1144,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
   final String nameAr;
   final String nameEn;
   final int startSurahNumber;
+  final int pageStart;
   final int startAyahNumber;
   final int endSurahNumber;
   final int endAyahNumber;
@@ -1137,6 +1153,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
       required this.nameAr,
       required this.nameEn,
       required this.startSurahNumber,
+      required this.pageStart,
       required this.startAyahNumber,
       required this.endSurahNumber,
       required this.endAyahNumber});
@@ -1147,6 +1164,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
     map['name_ar'] = Variable<String>(nameAr);
     map['name_en'] = Variable<String>(nameEn);
     map['start_surah_number'] = Variable<int>(startSurahNumber);
+    map['page_start'] = Variable<int>(pageStart);
     map['start_ayah_number'] = Variable<int>(startAyahNumber);
     map['end_surah_number'] = Variable<int>(endSurahNumber);
     map['end_ayah_number'] = Variable<int>(endAyahNumber);
@@ -1159,6 +1177,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
       nameAr: Value(nameAr),
       nameEn: Value(nameEn),
       startSurahNumber: Value(startSurahNumber),
+      pageStart: Value(pageStart),
       startAyahNumber: Value(startAyahNumber),
       endSurahNumber: Value(endSurahNumber),
       endAyahNumber: Value(endAyahNumber),
@@ -1173,6 +1192,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
       nameAr: serializer.fromJson<String>(json['nameAr']),
       nameEn: serializer.fromJson<String>(json['nameEn']),
       startSurahNumber: serializer.fromJson<int>(json['startSurahNumber']),
+      pageStart: serializer.fromJson<int>(json['pageStart']),
       startAyahNumber: serializer.fromJson<int>(json['startAyahNumber']),
       endSurahNumber: serializer.fromJson<int>(json['endSurahNumber']),
       endAyahNumber: serializer.fromJson<int>(json['endAyahNumber']),
@@ -1186,6 +1206,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
       'nameAr': serializer.toJson<String>(nameAr),
       'nameEn': serializer.toJson<String>(nameEn),
       'startSurahNumber': serializer.toJson<int>(startSurahNumber),
+      'pageStart': serializer.toJson<int>(pageStart),
       'startAyahNumber': serializer.toJson<int>(startAyahNumber),
       'endSurahNumber': serializer.toJson<int>(endSurahNumber),
       'endAyahNumber': serializer.toJson<int>(endAyahNumber),
@@ -1197,6 +1218,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
           String? nameAr,
           String? nameEn,
           int? startSurahNumber,
+          int? pageStart,
           int? startAyahNumber,
           int? endSurahNumber,
           int? endAyahNumber}) =>
@@ -1205,6 +1227,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
         nameAr: nameAr ?? this.nameAr,
         nameEn: nameEn ?? this.nameEn,
         startSurahNumber: startSurahNumber ?? this.startSurahNumber,
+        pageStart: pageStart ?? this.pageStart,
         startAyahNumber: startAyahNumber ?? this.startAyahNumber,
         endSurahNumber: endSurahNumber ?? this.endSurahNumber,
         endAyahNumber: endAyahNumber ?? this.endAyahNumber,
@@ -1216,6 +1239,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
           ..write('nameAr: $nameAr, ')
           ..write('nameEn: $nameEn, ')
           ..write('startSurahNumber: $startSurahNumber, ')
+          ..write('pageStart: $pageStart, ')
           ..write('startAyahNumber: $startAyahNumber, ')
           ..write('endSurahNumber: $endSurahNumber, ')
           ..write('endAyahNumber: $endAyahNumber')
@@ -1225,7 +1249,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
 
   @override
   int get hashCode => Object.hash(number, nameAr, nameEn, startSurahNumber,
-      startAyahNumber, endSurahNumber, endAyahNumber);
+      pageStart, startAyahNumber, endSurahNumber, endAyahNumber);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1234,6 +1258,7 @@ class JuzData extends DataClass implements Insertable<JuzData> {
           other.nameAr == this.nameAr &&
           other.nameEn == this.nameEn &&
           other.startSurahNumber == this.startSurahNumber &&
+          other.pageStart == this.pageStart &&
           other.startAyahNumber == this.startAyahNumber &&
           other.endSurahNumber == this.endSurahNumber &&
           other.endAyahNumber == this.endAyahNumber);
@@ -1244,6 +1269,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
   final Value<String> nameAr;
   final Value<String> nameEn;
   final Value<int> startSurahNumber;
+  final Value<int> pageStart;
   final Value<int> startAyahNumber;
   final Value<int> endSurahNumber;
   final Value<int> endAyahNumber;
@@ -1252,6 +1278,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
     this.nameAr = const Value.absent(),
     this.nameEn = const Value.absent(),
     this.startSurahNumber = const Value.absent(),
+    this.pageStart = const Value.absent(),
     this.startAyahNumber = const Value.absent(),
     this.endSurahNumber = const Value.absent(),
     this.endAyahNumber = const Value.absent(),
@@ -1261,12 +1288,14 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
     required String nameAr,
     required String nameEn,
     required int startSurahNumber,
+    required int pageStart,
     required int startAyahNumber,
     required int endSurahNumber,
     required int endAyahNumber,
   })  : nameAr = Value(nameAr),
         nameEn = Value(nameEn),
         startSurahNumber = Value(startSurahNumber),
+        pageStart = Value(pageStart),
         startAyahNumber = Value(startAyahNumber),
         endSurahNumber = Value(endSurahNumber),
         endAyahNumber = Value(endAyahNumber);
@@ -1275,6 +1304,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
     Expression<String>? nameAr,
     Expression<String>? nameEn,
     Expression<int>? startSurahNumber,
+    Expression<int>? pageStart,
     Expression<int>? startAyahNumber,
     Expression<int>? endSurahNumber,
     Expression<int>? endAyahNumber,
@@ -1284,6 +1314,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
       if (nameAr != null) 'name_ar': nameAr,
       if (nameEn != null) 'name_en': nameEn,
       if (startSurahNumber != null) 'start_surah_number': startSurahNumber,
+      if (pageStart != null) 'page_start': pageStart,
       if (startAyahNumber != null) 'start_ayah_number': startAyahNumber,
       if (endSurahNumber != null) 'end_surah_number': endSurahNumber,
       if (endAyahNumber != null) 'end_ayah_number': endAyahNumber,
@@ -1295,6 +1326,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
       Value<String>? nameAr,
       Value<String>? nameEn,
       Value<int>? startSurahNumber,
+      Value<int>? pageStart,
       Value<int>? startAyahNumber,
       Value<int>? endSurahNumber,
       Value<int>? endAyahNumber}) {
@@ -1303,6 +1335,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
       nameAr: nameAr ?? this.nameAr,
       nameEn: nameEn ?? this.nameEn,
       startSurahNumber: startSurahNumber ?? this.startSurahNumber,
+      pageStart: pageStart ?? this.pageStart,
       startAyahNumber: startAyahNumber ?? this.startAyahNumber,
       endSurahNumber: endSurahNumber ?? this.endSurahNumber,
       endAyahNumber: endAyahNumber ?? this.endAyahNumber,
@@ -1324,6 +1357,9 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
     if (startSurahNumber.present) {
       map['start_surah_number'] = Variable<int>(startSurahNumber.value);
     }
+    if (pageStart.present) {
+      map['page_start'] = Variable<int>(pageStart.value);
+    }
     if (startAyahNumber.present) {
       map['start_ayah_number'] = Variable<int>(startAyahNumber.value);
     }
@@ -1343,6 +1379,7 @@ class JuzCompanion extends UpdateCompanion<JuzData> {
           ..write('nameAr: $nameAr, ')
           ..write('nameEn: $nameEn, ')
           ..write('startSurahNumber: $startSurahNumber, ')
+          ..write('pageStart: $pageStart, ')
           ..write('startAyahNumber: $startAyahNumber, ')
           ..write('endSurahNumber: $endSurahNumber, ')
           ..write('endAyahNumber: $endAyahNumber')

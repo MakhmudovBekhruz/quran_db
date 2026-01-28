@@ -68,6 +68,7 @@ class QuranRepositoryImpl implements QuranRepository {
       startAyahNumber: data.startAyahNumber,
       endSurahNumber: data.endSurahNumber,
       endAyahNumber: data.endAyahNumber,
+      pageStart: data.pageStart,
     );
   }
 
@@ -166,6 +167,7 @@ class QuranRepositoryImpl implements QuranRepository {
       startAyahNumber: juz.startAyahNumber,
       endSurahNumber: juz.endSurahNumber,
       endAyahNumber: juz.endAyahNumber,
+      pageStart: juz.pageStart,
     );
   }
 
