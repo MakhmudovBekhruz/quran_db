@@ -44,6 +44,12 @@ class QuranLineWordModel with _$QuranLineWordModel {
   /// Location format: "surah:ayah:wordNumberInAyah"
   int? get ayahNumber => _parseAyahFromLocation(location);
 
+  /// Word index within the ayah parsed from the location field (1-based).
+  ///
+  /// Returns `null` if location is empty or cannot be parsed.
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  int? get wordNumberInAyah => _parseWordNumberFromLocation(location);
+
   /// Parses the surah number from the location string.
   ///
   /// Location format: "surah:ayah:wordNumberInAyah"
@@ -64,5 +70,16 @@ class QuranLineWordModel with _$QuranLineWordModel {
     final parts = location.split(':');
     if (parts.length < 2) return null;
     return int.tryParse(parts[1]);
+  }
+
+  /// Parses the word index within the ayah from the location string (1-based).
+  ///
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  /// Returns `null` if location is empty or cannot be parsed.
+  int? _parseWordNumberFromLocation(String location) {
+    if (location.isEmpty) return null;
+    final parts = location.split(':');
+    if (parts.length < 3) return null;
+    return int.tryParse(parts[2]);
   }
 }
