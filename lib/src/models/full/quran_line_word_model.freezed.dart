@@ -24,6 +24,7 @@ mixin _$QuranLineWordModel {
   int get id => throw _privateConstructorUsedError;
 
   /// Location identifier.
+  /// Format: "surah:ayah:wordNumberInAyah" (e.g., "1:1:1", "2:3:5")
   String get location => throw _privateConstructorUsedError;
 
   /// The word text.
@@ -174,14 +175,15 @@ class __$$QuranLineWordModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$QuranLineWordModelImpl implements _QuranLineWordModel {
+class _$QuranLineWordModelImpl extends _QuranLineWordModel {
   const _$QuranLineWordModelImpl(
       {required this.id,
       required this.location,
       required this.word,
       required this.qocV1,
       required this.qocV2,
-      required this.lineId});
+      required this.lineId})
+      : super._();
 
   factory _$QuranLineWordModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuranLineWordModelImplFromJson(json);
@@ -191,6 +193,7 @@ class _$QuranLineWordModelImpl implements _QuranLineWordModel {
   final int id;
 
   /// Location identifier.
+  /// Format: "surah:ayah:wordNumberInAyah" (e.g., "1:1:1", "2:3:5")
   @override
   final String location;
 
@@ -249,7 +252,7 @@ class _$QuranLineWordModelImpl implements _QuranLineWordModel {
   }
 }
 
-abstract class _QuranLineWordModel implements QuranLineWordModel {
+abstract class _QuranLineWordModel extends QuranLineWordModel {
   const factory _QuranLineWordModel(
       {required final int id,
       required final String location,
@@ -257,6 +260,7 @@ abstract class _QuranLineWordModel implements QuranLineWordModel {
       required final String qocV1,
       required final String qocV2,
       required final int lineId}) = _$QuranLineWordModelImpl;
+  const _QuranLineWordModel._() : super._();
 
   factory _QuranLineWordModel.fromJson(Map<String, dynamic> json) =
       _$QuranLineWordModelImpl.fromJson;
@@ -268,6 +272,7 @@ abstract class _QuranLineWordModel implements QuranLineWordModel {
   @override
 
   /// Location identifier.
+  /// Format: "surah:ayah:wordNumberInAyah" (e.g., "1:1:1", "2:3:5")
   String get location;
   @override
 

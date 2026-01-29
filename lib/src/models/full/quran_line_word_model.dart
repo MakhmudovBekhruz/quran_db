@@ -11,6 +11,7 @@ class QuranLineWordModel with _$QuranLineWordModel {
     required int id,
 
     /// Location identifier.
+    /// Format: "surah:ayah:wordNumberInAyah" (e.g., "1:1:1", "2:3:5")
     required String location,
 
     /// The word text.
@@ -26,6 +27,42 @@ class QuranLineWordModel with _$QuranLineWordModel {
     required int lineId,
   }) = _QuranLineWordModel;
 
+  const QuranLineWordModel._();
+
   factory QuranLineWordModel.fromJson(Map<String, dynamic> json) =>
       _$QuranLineWordModelFromJson(json);
+
+  /// Surah number (1-114) parsed from the location field.
+  ///
+  /// Returns `null` if location is empty or cannot be parsed.
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  int? get surahNumber => _parseSurahFromLocation(location);
+
+  /// Ayah number within the surah parsed from the location field.
+  ///
+  /// Returns `null` if location is empty or cannot be parsed.
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  int? get ayahNumber => _parseAyahFromLocation(location);
+
+  /// Parses the surah number from the location string.
+  ///
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  /// Returns `null` if location is empty or cannot be parsed.
+  int? _parseSurahFromLocation(String location) {
+    if (location.isEmpty) return null;
+    final parts = location.split(':');
+    if (parts.length < 2) return null;
+    return int.tryParse(parts[0]);
+  }
+
+  /// Parses the ayah number from the location string.
+  ///
+  /// Location format: "surah:ayah:wordNumberInAyah"
+  /// Returns `null` if location is empty or cannot be parsed.
+  int? _parseAyahFromLocation(String location) {
+    if (location.isEmpty) return null;
+    final parts = location.split(':');
+    if (parts.length < 2) return null;
+    return int.tryParse(parts[1]);
+  }
 }
