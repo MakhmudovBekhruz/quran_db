@@ -39,6 +39,30 @@ class SurahModel with _$SurahModel {
     /// Uzbek meaning of the name in Cyrillic script.
     required String nameUzCyrMeaning,
 
+    /// Kazakh name.
+    required String nameKk,
+
+    /// Kazakh meaning of the name.
+    required String nameKkMeaning,
+
+    /// Tajik name.
+    required String nameTg,
+
+    /// Tajik meaning of the name.
+    required String nameTgMeaning,
+
+    /// Turkish name.
+    required String nameTr,
+
+    /// Turkish meaning of the name.
+    required String nameTrMeaning,
+
+    /// Urdu name.
+    required String nameUr,
+
+    /// Urdu meaning of the name.
+    required String nameUrMeaning,
+
     /// Total number of verses in this surah.
     required int versesCount,
 

@@ -41,6 +41,14 @@ class QuranRepositoryImpl implements QuranRepository {
       nameRuMeaning: data.nameRuMeaning,
       nameUzLatMeaning: data.nameUzLatMeaning,
       nameUzCyrMeaning: data.nameUzCyrMeaning,
+      nameKk: data.nameKk,
+      nameKkMeaning: data.nameKkMeaning,
+      nameTg: data.nameTg,
+      nameTgMeaning: data.nameTgMeaning,
+      nameTr: data.nameTr,
+      nameTrMeaning: data.nameTrMeaning,
+      nameUr: data.nameUr,
+      nameUrMeaning: data.nameUrMeaning,
       versesCount: data.versesCount,
       pageStart: data.pageStart,
       revelationType: RevelationType.fromValue(data.revelationType),
@@ -56,6 +64,10 @@ class QuranRepositoryImpl implements QuranRepository {
       textRu: data.textRu,
       textUzLat: data.textUzLat,
       textUzCyr: data.textUzCyr,
+      textKk: data.textKk,
+      textTg: data.textTg,
+      textTr: data.textTr,
+      textUr: data.textUr,
     );
   }
 
@@ -121,6 +133,30 @@ class QuranRepositoryImpl implements QuranRepository {
         revelationCity =
             surah.revelationType == RevelationType.meccan ? 'Макка' : 'Мадина';
         break;
+      case QuranLanguage.kazakh:
+        name = surah.nameKk;
+        meaning = surah.nameKkMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Мекке' : 'Медине';
+        break;
+      case QuranLanguage.tajik:
+        name = surah.nameTg;
+        meaning = surah.nameTgMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Макка' : 'Мадина';
+        break;
+      case QuranLanguage.turkish:
+        name = surah.nameTr;
+        meaning = surah.nameTrMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'Mekke' : 'Medine';
+        break;
+      case QuranLanguage.urdu:
+        name = surah.nameUr;
+        meaning = surah.nameUrMeaning;
+        revelationCity =
+            surah.revelationType == RevelationType.meccan ? 'مکہ' : 'مدینہ';
+        break;
     }
     return LocalizedSurahModel(
       number: surah.number,
@@ -148,6 +184,18 @@ class QuranRepositoryImpl implements QuranRepository {
         break;
       case QuranLanguage.uzbekCyrillic:
         text = ayah.textUzCyr;
+        break;
+      case QuranLanguage.kazakh:
+        text = ayah.textKk;
+        break;
+      case QuranLanguage.tajik:
+        text = ayah.textTg;
+        break;
+      case QuranLanguage.turkish:
+        text = ayah.textTr;
+        break;
+      case QuranLanguage.urdu:
+        text = ayah.textUr;
         break;
     }
     return LocalizedAyahModel(
@@ -216,6 +264,14 @@ class QuranRepositoryImpl implements QuranRepository {
         return ayah.textUzLat;
       case QuranLanguage.uzbekCyrillic:
         return ayah.textUzCyr;
+      case QuranLanguage.kazakh:
+        return ayah.textKk;
+      case QuranLanguage.tajik:
+        return ayah.textTg;
+      case QuranLanguage.turkish:
+        return ayah.textTr;
+      case QuranLanguage.urdu:
+        return ayah.textUr;
     }
   }
 
@@ -229,6 +285,14 @@ class QuranRepositoryImpl implements QuranRepository {
         return surah.nameUzLat;
       case QuranLanguage.uzbekCyrillic:
         return surah.nameUzCyr;
+      case QuranLanguage.kazakh:
+        return surah.nameKk;
+      case QuranLanguage.tajik:
+        return surah.nameTg;
+      case QuranLanguage.turkish:
+        return surah.nameTr;
+      case QuranLanguage.urdu:
+        return surah.nameUr;
     }
   }
 
@@ -492,12 +556,96 @@ class QuranRepositoryImpl implements QuranRepository {
       throw InvalidPageException(page);
     }
 
+    final trimmedQuery = query.trim();
+    final numericQuery = int.tryParse(trimmedQuery);
+
+    // Optional numeric search: when query is a pure number like "50",
+    // we add direct matches for surah 50, ayah 50, and page 50 (when they exist),
+    // always at the top of the first page.
+    final numericResults = <SearchResultModel>[];
+    if (page == 1 && numericQuery != null) {
+      final n = numericQuery;
+
+      // Surah number match
+      if (n >= 1 && n <= 114) {
+        final surahs = await _getAllSurahsInternal();
+        final surah =
+            surahs.where((s) => s.number == n).cast<SurahModel?>().firstOrNull;
+        if (surah != null) {
+          final localized = _localizeSurah(surah, language);
+          numericResults.add(
+            SearchResultModel(
+              type: SearchResultType.surah,
+              surahNumber: localized.number,
+              ayahNumber: null,
+              matchedText: trimmedQuery,
+              fullText: localized.name,
+              matchStartIndex: 0,
+              matchEndIndex: trimmedQuery.length,
+              contextBefore: '',
+              contextAfter: '',
+            ),
+          );
+        }
+
+        // Ayah number match: (surah n, ayah n) if that ayah exists
+        if (surah != null && n >= 1 && n <= surah.versesCount) {
+          final ayahsInSurah = await _getAyahsBySurahInternal(n);
+          final ayah = ayahsInSurah
+              .where((a) => a.ayahNumber == n)
+              .cast<AyahModel?>()
+              .firstOrNull;
+          if (ayah != null) {
+            final localizedAyah = _localizeAyah(ayah, language);
+            numericResults.add(
+              SearchResultModel(
+                type: SearchResultType.ayah,
+                surahNumber: localizedAyah.surahNumber,
+                ayahNumber: localizedAyah.ayahNumber,
+                matchedText: trimmedQuery,
+                fullText: localizedAyah.text,
+                matchStartIndex: 0,
+                matchEndIndex: trimmedQuery.length,
+                contextBefore: '',
+                contextAfter: '',
+              ),
+            );
+          }
+        }
+      }
+
+      // Page number match: first ayah on that page (if any)
+      if (n >= 1 && n <= 604) {
+        try {
+          final pageModel = await getPageByNumber(n, language);
+          if (pageModel.ayahs.isNotEmpty) {
+            final firstAyah = pageModel.ayahs.first;
+            numericResults.add(
+              SearchResultModel(
+                type: SearchResultType.ayah,
+                surahNumber: firstAyah.surahNumber,
+                ayahNumber: firstAyah.ayahNumber,
+                matchedText: trimmedQuery,
+                fullText: firstAyah.text,
+                matchStartIndex: 0,
+                matchEndIndex: trimmedQuery.length,
+                contextBefore: '',
+                contextAfter: '',
+              ),
+            );
+          }
+        } on PageNotFoundException {
+          // Ignore if page does not exist
+        }
+      }
+    }
+
     // Get surah results (not paginated, usually small)
-    final surahResults = await searchSurahs(query, language);
+    final surahResults = await searchSurahs(trimmedQuery, language);
 
     // Get ayah results (paginated)
     final ayahPaginatedResults = await searchAyahs(
-      query,
+      trimmedQuery,
       language,
       page: page,
       pageSize: pageSize,
@@ -506,6 +654,11 @@ class QuranRepositoryImpl implements QuranRepository {
     // Combine results (surahs first, then ayahs)
     final allItems = <SearchResultModel>[];
 
+    // Add numeric matches first (only on the first page)
+    if (page == 1 && numericResults.isNotEmpty) {
+      allItems.addAll(numericResults);
+    }
+
     // Add surah results only on the first page
     if (page == 1) {
       allItems.addAll(surahResults);
@@ -513,9 +666,13 @@ class QuranRepositoryImpl implements QuranRepository {
 
     allItems.addAll(ayahPaginatedResults.items);
 
+    final totalNumericResults = page == 1 ? numericResults.length : 0;
     final totalSurahResults = surahResults.length;
-    final totalItems = totalSurahResults + ayahPaginatedResults.totalItems;
-    final totalPages = ((totalItems - totalSurahResults) / pageSize).ceil();
+    final totalItems =
+        totalNumericResults + totalSurahResults + ayahPaginatedResults.totalItems;
+    final totalPages =
+        ((totalItems - totalNumericResults - totalSurahResults) / pageSize)
+            .ceil();
 
     return PaginatedResultModel(
       items: allItems,
@@ -562,6 +719,22 @@ class QuranRepositoryImpl implements QuranRepository {
         ayahsData = await _database.searchAyahsUzCyr(query, pageSize, offset);
         totalCount = await _database.countSearchAyahsUzCyr(query);
         break;
+      case QuranLanguage.kazakh:
+        ayahsData = await _database.searchAyahsKk(query, pageSize, offset);
+        totalCount = await _database.countSearchAyahsKk(query);
+        break;
+      case QuranLanguage.tajik:
+        ayahsData = await _database.searchAyahsTg(query, pageSize, offset);
+        totalCount = await _database.countSearchAyahsTg(query);
+        break;
+      case QuranLanguage.turkish:
+        ayahsData = await _database.searchAyahsTr(query, pageSize, offset);
+        totalCount = await _database.countSearchAyahsTr(query);
+        break;
+      case QuranLanguage.urdu:
+        ayahsData = await _database.searchAyahsUr(query, pageSize, offset);
+        totalCount = await _database.countSearchAyahsUr(query);
+        break;
     }
 
     final results = ayahsData.map((ayah) {
@@ -607,6 +780,18 @@ class QuranRepositoryImpl implements QuranRepository {
         break;
       case QuranLanguage.uzbekCyrillic:
         surahsData = await _database.searchSurahsUzCyr(query);
+        break;
+      case QuranLanguage.kazakh:
+        surahsData = await _database.searchSurahsKk(query);
+        break;
+      case QuranLanguage.tajik:
+        surahsData = await _database.searchSurahsTg(query);
+        break;
+      case QuranLanguage.turkish:
+        surahsData = await _database.searchSurahsTr(query);
+        break;
+      case QuranLanguage.urdu:
+        surahsData = await _database.searchSurahsUr(query);
         break;
     }
 

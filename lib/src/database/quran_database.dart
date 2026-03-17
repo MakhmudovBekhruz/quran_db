@@ -20,6 +20,14 @@ class Surah extends Table {
   TextColumn get nameRuMeaning => text().named('name_ru_meaning')();
   TextColumn get nameUzLatMeaning => text().named('name_uz_lat_meaning')();
   TextColumn get nameUzCyrMeaning => text().named('name_uz_cyr_meaning')();
+  TextColumn get nameKk => text().named('name_kk')();
+  TextColumn get nameKkMeaning => text().named('name_kk_meaning')();
+  TextColumn get nameTg => text().named('name_tg')();
+  TextColumn get nameTgMeaning => text().named('name_tg_meaning')();
+  TextColumn get nameTr => text().named('name_tr')();
+  TextColumn get nameTrMeaning => text().named('name_tr_meaning')();
+  TextColumn get nameUr => text().named('name_ur')();
+  TextColumn get nameUrMeaning => text().named('name_ur_meaning')();
   IntColumn get versesCount => integer().named('verses_count')();
   IntColumn get pageStart => integer().named('page_start')();
   TextColumn get revelationType => text().named('revelation_type')();
@@ -37,6 +45,10 @@ class Ayahs extends Table {
   TextColumn get textRu => text().named('text_ru')();
   TextColumn get textUzLat => text().named('text_uz_lat')();
   TextColumn get textUzCyr => text().named('text_uz_cyr')();
+  TextColumn get textKk => text().named('text_kk')();
+  TextColumn get textTg => text().named('text_tg')();
+  TextColumn get textTr => text().named('text_tr')();
+  TextColumn get textUr => text().named('text_ur')();
 }
 
 /// Drift table for juz.
@@ -149,6 +161,34 @@ class QuranDatabase extends _$QuranDatabase {
             ..limit(limit, offset: offset))
           .get();
 
+  /// Searches ayahs in Kazakh.
+  Future<List<Ayah>> searchAyahsKk(String query, int limit, int offset) =>
+      (select(ayahs)
+            ..where((a) => a.textKk.like('%$query%'))
+            ..limit(limit, offset: offset))
+          .get();
+
+  /// Searches ayahs in Tajik.
+  Future<List<Ayah>> searchAyahsTg(String query, int limit, int offset) =>
+      (select(ayahs)
+            ..where((a) => a.textTg.like('%$query%'))
+            ..limit(limit, offset: offset))
+          .get();
+
+  /// Searches ayahs in Turkish.
+  Future<List<Ayah>> searchAyahsTr(String query, int limit, int offset) =>
+      (select(ayahs)
+            ..where((a) => a.textTr.like('%$query%'))
+            ..limit(limit, offset: offset))
+          .get();
+
+  /// Searches ayahs in Urdu.
+  Future<List<Ayah>> searchAyahsUr(String query, int limit, int offset) =>
+      (select(ayahs)
+            ..where((a) => a.textUr.like('%$query%'))
+            ..limit(limit, offset: offset))
+          .get();
+
   /// Counts total ayah search results in English.
   Future<int> countSearchAyahsEn(String query) async {
     final count = ayahs.id.count();
@@ -185,6 +225,46 @@ class QuranDatabase extends _$QuranDatabase {
     final q = selectOnly(ayahs)
       ..addColumns([count])
       ..where(ayahs.textUzCyr.like('%$query%'));
+    final result = await q.getSingle();
+    return result.read(count) ?? 0;
+  }
+
+  /// Counts total ayah search results in Kazakh.
+  Future<int> countSearchAyahsKk(String query) async {
+    final count = ayahs.id.count();
+    final q = selectOnly(ayahs)
+      ..addColumns([count])
+      ..where(ayahs.textKk.like('%$query%'));
+    final result = await q.getSingle();
+    return result.read(count) ?? 0;
+  }
+
+  /// Counts total ayah search results in Tajik.
+  Future<int> countSearchAyahsTg(String query) async {
+    final count = ayahs.id.count();
+    final q = selectOnly(ayahs)
+      ..addColumns([count])
+      ..where(ayahs.textTg.like('%$query%'));
+    final result = await q.getSingle();
+    return result.read(count) ?? 0;
+  }
+
+  /// Counts total ayah search results in Turkish.
+  Future<int> countSearchAyahsTr(String query) async {
+    final count = ayahs.id.count();
+    final q = selectOnly(ayahs)
+      ..addColumns([count])
+      ..where(ayahs.textTr.like('%$query%'));
+    final result = await q.getSingle();
+    return result.read(count) ?? 0;
+  }
+
+  /// Counts total ayah search results in Urdu.
+  Future<int> countSearchAyahsUr(String query) async {
+    final count = ayahs.id.count();
+    final q = selectOnly(ayahs)
+      ..addColumns([count])
+      ..where(ayahs.textUr.like('%$query%'));
     final result = await q.getSingle();
     return result.read(count) ?? 0;
   }
@@ -233,6 +313,22 @@ class QuranDatabase extends _$QuranDatabase {
   /// Searches surahs by name in Uzbek Cyrillic.
   Future<List<SurahData>> searchSurahsUzCyr(String query) =>
       (select(surah)..where((s) => s.nameUzCyr.like('%$query%'))).get();
+
+  /// Searches surahs by name in Kazakh.
+  Future<List<SurahData>> searchSurahsKk(String query) =>
+      (select(surah)..where((s) => s.nameKk.like('%$query%'))).get();
+
+  /// Searches surahs by name in Tajik.
+  Future<List<SurahData>> searchSurahsTg(String query) =>
+      (select(surah)..where((s) => s.nameTg.like('%$query%'))).get();
+
+  /// Searches surahs by name in Turkish.
+  Future<List<SurahData>> searchSurahsTr(String query) =>
+      (select(surah)..where((s) => s.nameTr.like('%$query%'))).get();
+
+  /// Searches surahs by name in Urdu.
+  Future<List<SurahData>> searchSurahsUr(String query) =>
+      (select(surah)..where((s) => s.nameUr.like('%$query%'))).get();
 }
 
 /// Opens the Quran database from assets or custom path.

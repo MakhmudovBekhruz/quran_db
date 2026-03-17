@@ -11,4 +11,16 @@ enum QuranLanguage {
 
   /// Uzbek in Cyrillic script
   uzbekCyrillic,
+
+  /// Kazakh language
+  kazakh,
+
+  /// Tajik language
+  tajik,
+
+  /// Turkish language
+  turkish,
+
+  /// Urdu language
+  urdu,
 }

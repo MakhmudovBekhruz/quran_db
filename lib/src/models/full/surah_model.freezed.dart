@@ -50,6 +50,30 @@ mixin _$SurahModel {
   /// Uzbek meaning of the name in Cyrillic script.
   String get nameUzCyrMeaning => throw _privateConstructorUsedError;
 
+  /// Kazakh name.
+  String get nameKk => throw _privateConstructorUsedError;
+
+  /// Kazakh meaning of the name.
+  String get nameKkMeaning => throw _privateConstructorUsedError;
+
+  /// Tajik name.
+  String get nameTg => throw _privateConstructorUsedError;
+
+  /// Tajik meaning of the name.
+  String get nameTgMeaning => throw _privateConstructorUsedError;
+
+  /// Turkish name.
+  String get nameTr => throw _privateConstructorUsedError;
+
+  /// Turkish meaning of the name.
+  String get nameTrMeaning => throw _privateConstructorUsedError;
+
+  /// Urdu name.
+  String get nameUr => throw _privateConstructorUsedError;
+
+  /// Urdu meaning of the name.
+  String get nameUrMeaning => throw _privateConstructorUsedError;
+
   /// Total number of verses in this surah.
   int get versesCount => throw _privateConstructorUsedError;
 
@@ -82,6 +106,14 @@ abstract class $SurahModelCopyWith<$Res> {
       String nameRuMeaning,
       String nameUzLatMeaning,
       String nameUzCyrMeaning,
+      String nameKk,
+      String nameKkMeaning,
+      String nameTg,
+      String nameTgMeaning,
+      String nameTr,
+      String nameTrMeaning,
+      String nameUr,
+      String nameUrMeaning,
       int versesCount,
       int pageStart,
       RevelationType revelationType});
@@ -110,6 +142,14 @@ class _$SurahModelCopyWithImpl<$Res, $Val extends SurahModel>
     Object? nameRuMeaning = null,
     Object? nameUzLatMeaning = null,
     Object? nameUzCyrMeaning = null,
+    Object? nameKk = null,
+    Object? nameKkMeaning = null,
+    Object? nameTg = null,
+    Object? nameTgMeaning = null,
+    Object? nameTr = null,
+    Object? nameTrMeaning = null,
+    Object? nameUr = null,
+    Object? nameUrMeaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
     Object? revelationType = null,
@@ -155,6 +195,38 @@ class _$SurahModelCopyWithImpl<$Res, $Val extends SurahModel>
           ? _value.nameUzCyrMeaning
           : nameUzCyrMeaning // ignore: cast_nullable_to_non_nullable
               as String,
+      nameKk: null == nameKk
+          ? _value.nameKk
+          : nameKk // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameKkMeaning: null == nameKkMeaning
+          ? _value.nameKkMeaning
+          : nameKkMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTg: null == nameTg
+          ? _value.nameTg
+          : nameTg // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTgMeaning: null == nameTgMeaning
+          ? _value.nameTgMeaning
+          : nameTgMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTr: null == nameTr
+          ? _value.nameTr
+          : nameTr // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTrMeaning: null == nameTrMeaning
+          ? _value.nameTrMeaning
+          : nameTrMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUr: null == nameUr
+          ? _value.nameUr
+          : nameUr // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUrMeaning: null == nameUrMeaning
+          ? _value.nameUrMeaning
+          : nameUrMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
       versesCount: null == versesCount
           ? _value.versesCount
           : versesCount // ignore: cast_nullable_to_non_nullable
@@ -190,6 +262,14 @@ abstract class _$$SurahModelImplCopyWith<$Res>
       String nameRuMeaning,
       String nameUzLatMeaning,
       String nameUzCyrMeaning,
+      String nameKk,
+      String nameKkMeaning,
+      String nameTg,
+      String nameTgMeaning,
+      String nameTr,
+      String nameTrMeaning,
+      String nameUr,
+      String nameUrMeaning,
       int versesCount,
       int pageStart,
       RevelationType revelationType});
@@ -216,6 +296,14 @@ class __$$SurahModelImplCopyWithImpl<$Res>
     Object? nameRuMeaning = null,
     Object? nameUzLatMeaning = null,
     Object? nameUzCyrMeaning = null,
+    Object? nameKk = null,
+    Object? nameKkMeaning = null,
+    Object? nameTg = null,
+    Object? nameTgMeaning = null,
+    Object? nameTr = null,
+    Object? nameTrMeaning = null,
+    Object? nameUr = null,
+    Object? nameUrMeaning = null,
     Object? versesCount = null,
     Object? pageStart = null,
     Object? revelationType = null,
@@ -261,6 +349,38 @@ class __$$SurahModelImplCopyWithImpl<$Res>
           ? _value.nameUzCyrMeaning
           : nameUzCyrMeaning // ignore: cast_nullable_to_non_nullable
               as String,
+      nameKk: null == nameKk
+          ? _value.nameKk
+          : nameKk // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameKkMeaning: null == nameKkMeaning
+          ? _value.nameKkMeaning
+          : nameKkMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTg: null == nameTg
+          ? _value.nameTg
+          : nameTg // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTgMeaning: null == nameTgMeaning
+          ? _value.nameTgMeaning
+          : nameTgMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTr: null == nameTr
+          ? _value.nameTr
+          : nameTr // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameTrMeaning: null == nameTrMeaning
+          ? _value.nameTrMeaning
+          : nameTrMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUr: null == nameUr
+          ? _value.nameUr
+          : nameUr // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUrMeaning: null == nameUrMeaning
+          ? _value.nameUrMeaning
+          : nameUrMeaning // ignore: cast_nullable_to_non_nullable
+              as String,
       versesCount: null == versesCount
           ? _value.versesCount
           : versesCount // ignore: cast_nullable_to_non_nullable
@@ -291,6 +411,14 @@ class _$SurahModelImpl implements _SurahModel {
       required this.nameRuMeaning,
       required this.nameUzLatMeaning,
       required this.nameUzCyrMeaning,
+      required this.nameKk,
+      required this.nameKkMeaning,
+      required this.nameTg,
+      required this.nameTgMeaning,
+      required this.nameTr,
+      required this.nameTrMeaning,
+      required this.nameUr,
+      required this.nameUrMeaning,
       required this.versesCount,
       required this.pageStart,
       required this.revelationType});
@@ -338,6 +466,38 @@ class _$SurahModelImpl implements _SurahModel {
   @override
   final String nameUzCyrMeaning;
 
+  /// Kazakh name.
+  @override
+  final String nameKk;
+
+  /// Kazakh meaning of the name.
+  @override
+  final String nameKkMeaning;
+
+  /// Tajik name.
+  @override
+  final String nameTg;
+
+  /// Tajik meaning of the name.
+  @override
+  final String nameTgMeaning;
+
+  /// Turkish name.
+  @override
+  final String nameTr;
+
+  /// Turkish meaning of the name.
+  @override
+  final String nameTrMeaning;
+
+  /// Urdu name.
+  @override
+  final String nameUr;
+
+  /// Urdu meaning of the name.
+  @override
+  final String nameUrMeaning;
+
   /// Total number of verses in this surah.
   @override
   final int versesCount;
@@ -352,7 +512,7 @@ class _$SurahModelImpl implements _SurahModel {
 
   @override
   String toString() {
-    return 'SurahModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, nameRu: $nameRu, nameUzLat: $nameUzLat, nameUzCyr: $nameUzCyr, nameEnMeaning: $nameEnMeaning, nameRuMeaning: $nameRuMeaning, nameUzLatMeaning: $nameUzLatMeaning, nameUzCyrMeaning: $nameUzCyrMeaning, versesCount: $versesCount, pageStart: $pageStart, revelationType: $revelationType)';
+    return 'SurahModel(number: $number, nameAr: $nameAr, nameEn: $nameEn, nameRu: $nameRu, nameUzLat: $nameUzLat, nameUzCyr: $nameUzCyr, nameEnMeaning: $nameEnMeaning, nameRuMeaning: $nameRuMeaning, nameUzLatMeaning: $nameUzLatMeaning, nameUzCyrMeaning: $nameUzCyrMeaning, nameKk: $nameKk, nameKkMeaning: $nameKkMeaning, nameTg: $nameTg, nameTgMeaning: $nameTgMeaning, nameTr: $nameTr, nameTrMeaning: $nameTrMeaning, nameUr: $nameUr, nameUrMeaning: $nameUrMeaning, versesCount: $versesCount, pageStart: $pageStart, revelationType: $revelationType)';
   }
 
   @override
@@ -376,6 +536,18 @@ class _$SurahModelImpl implements _SurahModel {
                 other.nameUzLatMeaning == nameUzLatMeaning) &&
             (identical(other.nameUzCyrMeaning, nameUzCyrMeaning) ||
                 other.nameUzCyrMeaning == nameUzCyrMeaning) &&
+            (identical(other.nameKk, nameKk) || other.nameKk == nameKk) &&
+            (identical(other.nameKkMeaning, nameKkMeaning) ||
+                other.nameKkMeaning == nameKkMeaning) &&
+            (identical(other.nameTg, nameTg) || other.nameTg == nameTg) &&
+            (identical(other.nameTgMeaning, nameTgMeaning) ||
+                other.nameTgMeaning == nameTgMeaning) &&
+            (identical(other.nameTr, nameTr) || other.nameTr == nameTr) &&
+            (identical(other.nameTrMeaning, nameTrMeaning) ||
+                other.nameTrMeaning == nameTrMeaning) &&
+            (identical(other.nameUr, nameUr) || other.nameUr == nameUr) &&
+            (identical(other.nameUrMeaning, nameUrMeaning) ||
+                other.nameUrMeaning == nameUrMeaning) &&
             (identical(other.versesCount, versesCount) ||
                 other.versesCount == versesCount) &&
             (identical(other.pageStart, pageStart) ||
@@ -386,21 +558,30 @@ class _$SurahModelImpl implements _SurahModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      number,
-      nameAr,
-      nameEn,
-      nameRu,
-      nameUzLat,
-      nameUzCyr,
-      nameEnMeaning,
-      nameRuMeaning,
-      nameUzLatMeaning,
-      nameUzCyrMeaning,
-      versesCount,
-      pageStart,
-      revelationType);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        number,
+        nameAr,
+        nameEn,
+        nameRu,
+        nameUzLat,
+        nameUzCyr,
+        nameEnMeaning,
+        nameRuMeaning,
+        nameUzLatMeaning,
+        nameUzCyrMeaning,
+        nameKk,
+        nameKkMeaning,
+        nameTg,
+        nameTgMeaning,
+        nameTr,
+        nameTrMeaning,
+        nameUr,
+        nameUrMeaning,
+        versesCount,
+        pageStart,
+        revelationType
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -428,6 +609,14 @@ abstract class _SurahModel implements SurahModel {
       required final String nameRuMeaning,
       required final String nameUzLatMeaning,
       required final String nameUzCyrMeaning,
+      required final String nameKk,
+      required final String nameKkMeaning,
+      required final String nameTg,
+      required final String nameTgMeaning,
+      required final String nameTr,
+      required final String nameTrMeaning,
+      required final String nameUr,
+      required final String nameUrMeaning,
       required final int versesCount,
       required final int pageStart,
       required final RevelationType revelationType}) = _$SurahModelImpl;
@@ -475,6 +664,38 @@ abstract class _SurahModel implements SurahModel {
 
   /// Uzbek meaning of the name in Cyrillic script.
   String get nameUzCyrMeaning;
+  @override
+
+  /// Kazakh name.
+  String get nameKk;
+  @override
+
+  /// Kazakh meaning of the name.
+  String get nameKkMeaning;
+  @override
+
+  /// Tajik name.
+  String get nameTg;
+  @override
+
+  /// Tajik meaning of the name.
+  String get nameTgMeaning;
+  @override
+
+  /// Turkish name.
+  String get nameTr;
+  @override
+
+  /// Turkish meaning of the name.
+  String get nameTrMeaning;
+  @override
+
+  /// Urdu name.
+  String get nameUr;
+  @override
+
+  /// Urdu meaning of the name.
+  String get nameUrMeaning;
   @override
 
   /// Total number of verses in this surah.

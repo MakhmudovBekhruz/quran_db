@@ -15,6 +15,10 @@ _$AyahModelImpl _$$AyahModelImplFromJson(Map<String, dynamic> json) =>
       textRu: json['textRu'] as String,
       textUzLat: json['textUzLat'] as String,
       textUzCyr: json['textUzCyr'] as String,
+      textKk: json['textKk'] as String,
+      textTg: json['textTg'] as String,
+      textTr: json['textTr'] as String,
+      textUr: json['textUr'] as String,
     );
 
 Map<String, dynamic> _$$AyahModelImplToJson(_$AyahModelImpl instance) =>
@@ -26,4 +30,8 @@ Map<String, dynamic> _$$AyahModelImplToJson(_$AyahModelImpl instance) =>
       'textRu': instance.textRu,
       'textUzLat': instance.textUzLat,
       'textUzCyr': instance.textUzCyr,
+      'textKk': instance.textKk,
+      'textTg': instance.textTg,
+      'textTr': instance.textTr,
+      'textUr': instance.textUr,
     };

@@ -64,6 +64,50 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
   late final GeneratedColumn<String> nameUzCyrMeaning = GeneratedColumn<String>(
       'name_uz_cyr_meaning', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameKkMeta = const VerificationMeta('nameKk');
+  @override
+  late final GeneratedColumn<String> nameKk = GeneratedColumn<String>(
+      'name_kk', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameKkMeaningMeta =
+      const VerificationMeta('nameKkMeaning');
+  @override
+  late final GeneratedColumn<String> nameKkMeaning = GeneratedColumn<String>(
+      'name_kk_meaning', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameTgMeta = const VerificationMeta('nameTg');
+  @override
+  late final GeneratedColumn<String> nameTg = GeneratedColumn<String>(
+      'name_tg', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameTgMeaningMeta =
+      const VerificationMeta('nameTgMeaning');
+  @override
+  late final GeneratedColumn<String> nameTgMeaning = GeneratedColumn<String>(
+      'name_tg_meaning', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameTrMeta = const VerificationMeta('nameTr');
+  @override
+  late final GeneratedColumn<String> nameTr = GeneratedColumn<String>(
+      'name_tr', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameTrMeaningMeta =
+      const VerificationMeta('nameTrMeaning');
+  @override
+  late final GeneratedColumn<String> nameTrMeaning = GeneratedColumn<String>(
+      'name_tr_meaning', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameUrMeta = const VerificationMeta('nameUr');
+  @override
+  late final GeneratedColumn<String> nameUr = GeneratedColumn<String>(
+      'name_ur', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameUrMeaningMeta =
+      const VerificationMeta('nameUrMeaning');
+  @override
+  late final GeneratedColumn<String> nameUrMeaning = GeneratedColumn<String>(
+      'name_ur_meaning', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _versesCountMeta =
       const VerificationMeta('versesCount');
   @override
@@ -94,6 +138,14 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
         nameRuMeaning,
         nameUzLatMeaning,
         nameUzCyrMeaning,
+        nameKk,
+        nameKkMeaning,
+        nameTg,
+        nameTgMeaning,
+        nameTr,
+        nameTrMeaning,
+        nameUr,
+        nameUrMeaning,
         versesCount,
         pageStart,
         revelationType
@@ -178,6 +230,62 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
     } else if (isInserting) {
       context.missing(_nameUzCyrMeaningMeta);
     }
+    if (data.containsKey('name_kk')) {
+      context.handle(_nameKkMeta,
+          nameKk.isAcceptableOrUnknown(data['name_kk']!, _nameKkMeta));
+    } else if (isInserting) {
+      context.missing(_nameKkMeta);
+    }
+    if (data.containsKey('name_kk_meaning')) {
+      context.handle(
+          _nameKkMeaningMeta,
+          nameKkMeaning.isAcceptableOrUnknown(
+              data['name_kk_meaning']!, _nameKkMeaningMeta));
+    } else if (isInserting) {
+      context.missing(_nameKkMeaningMeta);
+    }
+    if (data.containsKey('name_tg')) {
+      context.handle(_nameTgMeta,
+          nameTg.isAcceptableOrUnknown(data['name_tg']!, _nameTgMeta));
+    } else if (isInserting) {
+      context.missing(_nameTgMeta);
+    }
+    if (data.containsKey('name_tg_meaning')) {
+      context.handle(
+          _nameTgMeaningMeta,
+          nameTgMeaning.isAcceptableOrUnknown(
+              data['name_tg_meaning']!, _nameTgMeaningMeta));
+    } else if (isInserting) {
+      context.missing(_nameTgMeaningMeta);
+    }
+    if (data.containsKey('name_tr')) {
+      context.handle(_nameTrMeta,
+          nameTr.isAcceptableOrUnknown(data['name_tr']!, _nameTrMeta));
+    } else if (isInserting) {
+      context.missing(_nameTrMeta);
+    }
+    if (data.containsKey('name_tr_meaning')) {
+      context.handle(
+          _nameTrMeaningMeta,
+          nameTrMeaning.isAcceptableOrUnknown(
+              data['name_tr_meaning']!, _nameTrMeaningMeta));
+    } else if (isInserting) {
+      context.missing(_nameTrMeaningMeta);
+    }
+    if (data.containsKey('name_ur')) {
+      context.handle(_nameUrMeta,
+          nameUr.isAcceptableOrUnknown(data['name_ur']!, _nameUrMeta));
+    } else if (isInserting) {
+      context.missing(_nameUrMeta);
+    }
+    if (data.containsKey('name_ur_meaning')) {
+      context.handle(
+          _nameUrMeaningMeta,
+          nameUrMeaning.isAcceptableOrUnknown(
+              data['name_ur_meaning']!, _nameUrMeaningMeta));
+    } else if (isInserting) {
+      context.missing(_nameUrMeaningMeta);
+    }
     if (data.containsKey('verses_count')) {
       context.handle(
           _versesCountMeta,
@@ -229,6 +337,22 @@ class $SurahTable extends Surah with TableInfo<$SurahTable, SurahData> {
           DriftSqlType.string, data['${effectivePrefix}name_uz_lat_meaning'])!,
       nameUzCyrMeaning: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}name_uz_cyr_meaning'])!,
+      nameKk: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_kk'])!,
+      nameKkMeaning: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}name_kk_meaning'])!,
+      nameTg: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_tg'])!,
+      nameTgMeaning: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}name_tg_meaning'])!,
+      nameTr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_tr'])!,
+      nameTrMeaning: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}name_tr_meaning'])!,
+      nameUr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name_ur'])!,
+      nameUrMeaning: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}name_ur_meaning'])!,
       versesCount: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}verses_count'])!,
       pageStart: attachedDatabase.typeMapping
@@ -255,6 +379,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
   final String nameRuMeaning;
   final String nameUzLatMeaning;
   final String nameUzCyrMeaning;
+  final String nameKk;
+  final String nameKkMeaning;
+  final String nameTg;
+  final String nameTgMeaning;
+  final String nameTr;
+  final String nameTrMeaning;
+  final String nameUr;
+  final String nameUrMeaning;
   final int versesCount;
   final int pageStart;
   final String revelationType;
@@ -269,6 +401,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       required this.nameRuMeaning,
       required this.nameUzLatMeaning,
       required this.nameUzCyrMeaning,
+      required this.nameKk,
+      required this.nameKkMeaning,
+      required this.nameTg,
+      required this.nameTgMeaning,
+      required this.nameTr,
+      required this.nameTrMeaning,
+      required this.nameUr,
+      required this.nameUrMeaning,
       required this.versesCount,
       required this.pageStart,
       required this.revelationType});
@@ -285,6 +425,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
     map['name_ru_meaning'] = Variable<String>(nameRuMeaning);
     map['name_uz_lat_meaning'] = Variable<String>(nameUzLatMeaning);
     map['name_uz_cyr_meaning'] = Variable<String>(nameUzCyrMeaning);
+    map['name_kk'] = Variable<String>(nameKk);
+    map['name_kk_meaning'] = Variable<String>(nameKkMeaning);
+    map['name_tg'] = Variable<String>(nameTg);
+    map['name_tg_meaning'] = Variable<String>(nameTgMeaning);
+    map['name_tr'] = Variable<String>(nameTr);
+    map['name_tr_meaning'] = Variable<String>(nameTrMeaning);
+    map['name_ur'] = Variable<String>(nameUr);
+    map['name_ur_meaning'] = Variable<String>(nameUrMeaning);
     map['verses_count'] = Variable<int>(versesCount);
     map['page_start'] = Variable<int>(pageStart);
     map['revelation_type'] = Variable<String>(revelationType);
@@ -303,6 +451,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       nameRuMeaning: Value(nameRuMeaning),
       nameUzLatMeaning: Value(nameUzLatMeaning),
       nameUzCyrMeaning: Value(nameUzCyrMeaning),
+      nameKk: Value(nameKk),
+      nameKkMeaning: Value(nameKkMeaning),
+      nameTg: Value(nameTg),
+      nameTgMeaning: Value(nameTgMeaning),
+      nameTr: Value(nameTr),
+      nameTrMeaning: Value(nameTrMeaning),
+      nameUr: Value(nameUr),
+      nameUrMeaning: Value(nameUrMeaning),
       versesCount: Value(versesCount),
       pageStart: Value(pageStart),
       revelationType: Value(revelationType),
@@ -323,6 +479,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       nameRuMeaning: serializer.fromJson<String>(json['nameRuMeaning']),
       nameUzLatMeaning: serializer.fromJson<String>(json['nameUzLatMeaning']),
       nameUzCyrMeaning: serializer.fromJson<String>(json['nameUzCyrMeaning']),
+      nameKk: serializer.fromJson<String>(json['nameKk']),
+      nameKkMeaning: serializer.fromJson<String>(json['nameKkMeaning']),
+      nameTg: serializer.fromJson<String>(json['nameTg']),
+      nameTgMeaning: serializer.fromJson<String>(json['nameTgMeaning']),
+      nameTr: serializer.fromJson<String>(json['nameTr']),
+      nameTrMeaning: serializer.fromJson<String>(json['nameTrMeaning']),
+      nameUr: serializer.fromJson<String>(json['nameUr']),
+      nameUrMeaning: serializer.fromJson<String>(json['nameUrMeaning']),
       versesCount: serializer.fromJson<int>(json['versesCount']),
       pageStart: serializer.fromJson<int>(json['pageStart']),
       revelationType: serializer.fromJson<String>(json['revelationType']),
@@ -342,6 +506,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
       'nameRuMeaning': serializer.toJson<String>(nameRuMeaning),
       'nameUzLatMeaning': serializer.toJson<String>(nameUzLatMeaning),
       'nameUzCyrMeaning': serializer.toJson<String>(nameUzCyrMeaning),
+      'nameKk': serializer.toJson<String>(nameKk),
+      'nameKkMeaning': serializer.toJson<String>(nameKkMeaning),
+      'nameTg': serializer.toJson<String>(nameTg),
+      'nameTgMeaning': serializer.toJson<String>(nameTgMeaning),
+      'nameTr': serializer.toJson<String>(nameTr),
+      'nameTrMeaning': serializer.toJson<String>(nameTrMeaning),
+      'nameUr': serializer.toJson<String>(nameUr),
+      'nameUrMeaning': serializer.toJson<String>(nameUrMeaning),
       'versesCount': serializer.toJson<int>(versesCount),
       'pageStart': serializer.toJson<int>(pageStart),
       'revelationType': serializer.toJson<String>(revelationType),
@@ -359,6 +531,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           String? nameRuMeaning,
           String? nameUzLatMeaning,
           String? nameUzCyrMeaning,
+          String? nameKk,
+          String? nameKkMeaning,
+          String? nameTg,
+          String? nameTgMeaning,
+          String? nameTr,
+          String? nameTrMeaning,
+          String? nameUr,
+          String? nameUrMeaning,
           int? versesCount,
           int? pageStart,
           String? revelationType}) =>
@@ -373,6 +553,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
         nameRuMeaning: nameRuMeaning ?? this.nameRuMeaning,
         nameUzLatMeaning: nameUzLatMeaning ?? this.nameUzLatMeaning,
         nameUzCyrMeaning: nameUzCyrMeaning ?? this.nameUzCyrMeaning,
+        nameKk: nameKk ?? this.nameKk,
+        nameKkMeaning: nameKkMeaning ?? this.nameKkMeaning,
+        nameTg: nameTg ?? this.nameTg,
+        nameTgMeaning: nameTgMeaning ?? this.nameTgMeaning,
+        nameTr: nameTr ?? this.nameTr,
+        nameTrMeaning: nameTrMeaning ?? this.nameTrMeaning,
+        nameUr: nameUr ?? this.nameUr,
+        nameUrMeaning: nameUrMeaning ?? this.nameUrMeaning,
         versesCount: versesCount ?? this.versesCount,
         pageStart: pageStart ?? this.pageStart,
         revelationType: revelationType ?? this.revelationType,
@@ -390,6 +578,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           ..write('nameRuMeaning: $nameRuMeaning, ')
           ..write('nameUzLatMeaning: $nameUzLatMeaning, ')
           ..write('nameUzCyrMeaning: $nameUzCyrMeaning, ')
+          ..write('nameKk: $nameKk, ')
+          ..write('nameKkMeaning: $nameKkMeaning, ')
+          ..write('nameTg: $nameTg, ')
+          ..write('nameTgMeaning: $nameTgMeaning, ')
+          ..write('nameTr: $nameTr, ')
+          ..write('nameTrMeaning: $nameTrMeaning, ')
+          ..write('nameUr: $nameUr, ')
+          ..write('nameUrMeaning: $nameUrMeaning, ')
           ..write('versesCount: $versesCount, ')
           ..write('pageStart: $pageStart, ')
           ..write('revelationType: $revelationType')
@@ -398,20 +594,29 @@ class SurahData extends DataClass implements Insertable<SurahData> {
   }
 
   @override
-  int get hashCode => Object.hash(
-      number,
-      nameAr,
-      nameEn,
-      nameRu,
-      nameUzLat,
-      nameUzCyr,
-      nameEnMeaning,
-      nameRuMeaning,
-      nameUzLatMeaning,
-      nameUzCyrMeaning,
-      versesCount,
-      pageStart,
-      revelationType);
+  int get hashCode => Object.hashAll([
+        number,
+        nameAr,
+        nameEn,
+        nameRu,
+        nameUzLat,
+        nameUzCyr,
+        nameEnMeaning,
+        nameRuMeaning,
+        nameUzLatMeaning,
+        nameUzCyrMeaning,
+        nameKk,
+        nameKkMeaning,
+        nameTg,
+        nameTgMeaning,
+        nameTr,
+        nameTrMeaning,
+        nameUr,
+        nameUrMeaning,
+        versesCount,
+        pageStart,
+        revelationType
+      ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -426,6 +631,14 @@ class SurahData extends DataClass implements Insertable<SurahData> {
           other.nameRuMeaning == this.nameRuMeaning &&
           other.nameUzLatMeaning == this.nameUzLatMeaning &&
           other.nameUzCyrMeaning == this.nameUzCyrMeaning &&
+          other.nameKk == this.nameKk &&
+          other.nameKkMeaning == this.nameKkMeaning &&
+          other.nameTg == this.nameTg &&
+          other.nameTgMeaning == this.nameTgMeaning &&
+          other.nameTr == this.nameTr &&
+          other.nameTrMeaning == this.nameTrMeaning &&
+          other.nameUr == this.nameUr &&
+          other.nameUrMeaning == this.nameUrMeaning &&
           other.versesCount == this.versesCount &&
           other.pageStart == this.pageStart &&
           other.revelationType == this.revelationType);
@@ -442,6 +655,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
   final Value<String> nameRuMeaning;
   final Value<String> nameUzLatMeaning;
   final Value<String> nameUzCyrMeaning;
+  final Value<String> nameKk;
+  final Value<String> nameKkMeaning;
+  final Value<String> nameTg;
+  final Value<String> nameTgMeaning;
+  final Value<String> nameTr;
+  final Value<String> nameTrMeaning;
+  final Value<String> nameUr;
+  final Value<String> nameUrMeaning;
   final Value<int> versesCount;
   final Value<int> pageStart;
   final Value<String> revelationType;
@@ -456,6 +677,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     this.nameRuMeaning = const Value.absent(),
     this.nameUzLatMeaning = const Value.absent(),
     this.nameUzCyrMeaning = const Value.absent(),
+    this.nameKk = const Value.absent(),
+    this.nameKkMeaning = const Value.absent(),
+    this.nameTg = const Value.absent(),
+    this.nameTgMeaning = const Value.absent(),
+    this.nameTr = const Value.absent(),
+    this.nameTrMeaning = const Value.absent(),
+    this.nameUr = const Value.absent(),
+    this.nameUrMeaning = const Value.absent(),
     this.versesCount = const Value.absent(),
     this.pageStart = const Value.absent(),
     this.revelationType = const Value.absent(),
@@ -471,6 +700,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     required String nameRuMeaning,
     required String nameUzLatMeaning,
     required String nameUzCyrMeaning,
+    required String nameKk,
+    required String nameKkMeaning,
+    required String nameTg,
+    required String nameTgMeaning,
+    required String nameTr,
+    required String nameTrMeaning,
+    required String nameUr,
+    required String nameUrMeaning,
     required int versesCount,
     required int pageStart,
     required String revelationType,
@@ -483,6 +720,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
         nameRuMeaning = Value(nameRuMeaning),
         nameUzLatMeaning = Value(nameUzLatMeaning),
         nameUzCyrMeaning = Value(nameUzCyrMeaning),
+        nameKk = Value(nameKk),
+        nameKkMeaning = Value(nameKkMeaning),
+        nameTg = Value(nameTg),
+        nameTgMeaning = Value(nameTgMeaning),
+        nameTr = Value(nameTr),
+        nameTrMeaning = Value(nameTrMeaning),
+        nameUr = Value(nameUr),
+        nameUrMeaning = Value(nameUrMeaning),
         versesCount = Value(versesCount),
         pageStart = Value(pageStart),
         revelationType = Value(revelationType);
@@ -497,6 +742,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     Expression<String>? nameRuMeaning,
     Expression<String>? nameUzLatMeaning,
     Expression<String>? nameUzCyrMeaning,
+    Expression<String>? nameKk,
+    Expression<String>? nameKkMeaning,
+    Expression<String>? nameTg,
+    Expression<String>? nameTgMeaning,
+    Expression<String>? nameTr,
+    Expression<String>? nameTrMeaning,
+    Expression<String>? nameUr,
+    Expression<String>? nameUrMeaning,
     Expression<int>? versesCount,
     Expression<int>? pageStart,
     Expression<String>? revelationType,
@@ -512,6 +765,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       if (nameRuMeaning != null) 'name_ru_meaning': nameRuMeaning,
       if (nameUzLatMeaning != null) 'name_uz_lat_meaning': nameUzLatMeaning,
       if (nameUzCyrMeaning != null) 'name_uz_cyr_meaning': nameUzCyrMeaning,
+      if (nameKk != null) 'name_kk': nameKk,
+      if (nameKkMeaning != null) 'name_kk_meaning': nameKkMeaning,
+      if (nameTg != null) 'name_tg': nameTg,
+      if (nameTgMeaning != null) 'name_tg_meaning': nameTgMeaning,
+      if (nameTr != null) 'name_tr': nameTr,
+      if (nameTrMeaning != null) 'name_tr_meaning': nameTrMeaning,
+      if (nameUr != null) 'name_ur': nameUr,
+      if (nameUrMeaning != null) 'name_ur_meaning': nameUrMeaning,
       if (versesCount != null) 'verses_count': versesCount,
       if (pageStart != null) 'page_start': pageStart,
       if (revelationType != null) 'revelation_type': revelationType,
@@ -529,6 +790,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       Value<String>? nameRuMeaning,
       Value<String>? nameUzLatMeaning,
       Value<String>? nameUzCyrMeaning,
+      Value<String>? nameKk,
+      Value<String>? nameKkMeaning,
+      Value<String>? nameTg,
+      Value<String>? nameTgMeaning,
+      Value<String>? nameTr,
+      Value<String>? nameTrMeaning,
+      Value<String>? nameUr,
+      Value<String>? nameUrMeaning,
       Value<int>? versesCount,
       Value<int>? pageStart,
       Value<String>? revelationType}) {
@@ -543,6 +812,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
       nameRuMeaning: nameRuMeaning ?? this.nameRuMeaning,
       nameUzLatMeaning: nameUzLatMeaning ?? this.nameUzLatMeaning,
       nameUzCyrMeaning: nameUzCyrMeaning ?? this.nameUzCyrMeaning,
+      nameKk: nameKk ?? this.nameKk,
+      nameKkMeaning: nameKkMeaning ?? this.nameKkMeaning,
+      nameTg: nameTg ?? this.nameTg,
+      nameTgMeaning: nameTgMeaning ?? this.nameTgMeaning,
+      nameTr: nameTr ?? this.nameTr,
+      nameTrMeaning: nameTrMeaning ?? this.nameTrMeaning,
+      nameUr: nameUr ?? this.nameUr,
+      nameUrMeaning: nameUrMeaning ?? this.nameUrMeaning,
       versesCount: versesCount ?? this.versesCount,
       pageStart: pageStart ?? this.pageStart,
       revelationType: revelationType ?? this.revelationType,
@@ -582,6 +859,30 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
     if (nameUzCyrMeaning.present) {
       map['name_uz_cyr_meaning'] = Variable<String>(nameUzCyrMeaning.value);
     }
+    if (nameKk.present) {
+      map['name_kk'] = Variable<String>(nameKk.value);
+    }
+    if (nameKkMeaning.present) {
+      map['name_kk_meaning'] = Variable<String>(nameKkMeaning.value);
+    }
+    if (nameTg.present) {
+      map['name_tg'] = Variable<String>(nameTg.value);
+    }
+    if (nameTgMeaning.present) {
+      map['name_tg_meaning'] = Variable<String>(nameTgMeaning.value);
+    }
+    if (nameTr.present) {
+      map['name_tr'] = Variable<String>(nameTr.value);
+    }
+    if (nameTrMeaning.present) {
+      map['name_tr_meaning'] = Variable<String>(nameTrMeaning.value);
+    }
+    if (nameUr.present) {
+      map['name_ur'] = Variable<String>(nameUr.value);
+    }
+    if (nameUrMeaning.present) {
+      map['name_ur_meaning'] = Variable<String>(nameUrMeaning.value);
+    }
     if (versesCount.present) {
       map['verses_count'] = Variable<int>(versesCount.value);
     }
@@ -607,6 +908,14 @@ class SurahCompanion extends UpdateCompanion<SurahData> {
           ..write('nameRuMeaning: $nameRuMeaning, ')
           ..write('nameUzLatMeaning: $nameUzLatMeaning, ')
           ..write('nameUzCyrMeaning: $nameUzCyrMeaning, ')
+          ..write('nameKk: $nameKk, ')
+          ..write('nameKkMeaning: $nameKkMeaning, ')
+          ..write('nameTg: $nameTg, ')
+          ..write('nameTgMeaning: $nameTgMeaning, ')
+          ..write('nameTr: $nameTr, ')
+          ..write('nameTrMeaning: $nameTrMeaning, ')
+          ..write('nameUr: $nameUr, ')
+          ..write('nameUrMeaning: $nameUrMeaning, ')
           ..write('versesCount: $versesCount, ')
           ..write('pageStart: $pageStart, ')
           ..write('revelationType: $revelationType')
@@ -663,9 +972,40 @@ class $AyahsTable extends Ayahs with TableInfo<$AyahsTable, Ayah> {
   late final GeneratedColumn<String> textUzCyr = GeneratedColumn<String>(
       'text_uz_cyr', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _textKkMeta = const VerificationMeta('textKk');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, surahId, ayahNumber, textEn, textRu, textUzLat, textUzCyr];
+  late final GeneratedColumn<String> textKk = GeneratedColumn<String>(
+      'text_kk', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _textTgMeta = const VerificationMeta('textTg');
+  @override
+  late final GeneratedColumn<String> textTg = GeneratedColumn<String>(
+      'text_tg', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _textTrMeta = const VerificationMeta('textTr');
+  @override
+  late final GeneratedColumn<String> textTr = GeneratedColumn<String>(
+      'text_tr', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _textUrMeta = const VerificationMeta('textUr');
+  @override
+  late final GeneratedColumn<String> textUr = GeneratedColumn<String>(
+      'text_ur', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        surahId,
+        ayahNumber,
+        textEn,
+        textRu,
+        textUzLat,
+        textUzCyr,
+        textKk,
+        textTg,
+        textTr,
+        textUr
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -721,6 +1061,30 @@ class $AyahsTable extends Ayahs with TableInfo<$AyahsTable, Ayah> {
     } else if (isInserting) {
       context.missing(_textUzCyrMeta);
     }
+    if (data.containsKey('text_kk')) {
+      context.handle(_textKkMeta,
+          textKk.isAcceptableOrUnknown(data['text_kk']!, _textKkMeta));
+    } else if (isInserting) {
+      context.missing(_textKkMeta);
+    }
+    if (data.containsKey('text_tg')) {
+      context.handle(_textTgMeta,
+          textTg.isAcceptableOrUnknown(data['text_tg']!, _textTgMeta));
+    } else if (isInserting) {
+      context.missing(_textTgMeta);
+    }
+    if (data.containsKey('text_tr')) {
+      context.handle(_textTrMeta,
+          textTr.isAcceptableOrUnknown(data['text_tr']!, _textTrMeta));
+    } else if (isInserting) {
+      context.missing(_textTrMeta);
+    }
+    if (data.containsKey('text_ur')) {
+      context.handle(_textUrMeta,
+          textUr.isAcceptableOrUnknown(data['text_ur']!, _textUrMeta));
+    } else if (isInserting) {
+      context.missing(_textUrMeta);
+    }
     return context;
   }
 
@@ -744,6 +1108,14 @@ class $AyahsTable extends Ayahs with TableInfo<$AyahsTable, Ayah> {
           .read(DriftSqlType.string, data['${effectivePrefix}text_uz_lat'])!,
       textUzCyr: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}text_uz_cyr'])!,
+      textKk: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}text_kk'])!,
+      textTg: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}text_tg'])!,
+      textTr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}text_tr'])!,
+      textUr: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}text_ur'])!,
     );
   }
 
@@ -761,6 +1133,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
   final String textRu;
   final String textUzLat;
   final String textUzCyr;
+  final String textKk;
+  final String textTg;
+  final String textTr;
+  final String textUr;
   const Ayah(
       {required this.id,
       required this.surahId,
@@ -768,7 +1144,11 @@ class Ayah extends DataClass implements Insertable<Ayah> {
       required this.textEn,
       required this.textRu,
       required this.textUzLat,
-      required this.textUzCyr});
+      required this.textUzCyr,
+      required this.textKk,
+      required this.textTg,
+      required this.textTr,
+      required this.textUr});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -779,6 +1159,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
     map['text_ru'] = Variable<String>(textRu);
     map['text_uz_lat'] = Variable<String>(textUzLat);
     map['text_uz_cyr'] = Variable<String>(textUzCyr);
+    map['text_kk'] = Variable<String>(textKk);
+    map['text_tg'] = Variable<String>(textTg);
+    map['text_tr'] = Variable<String>(textTr);
+    map['text_ur'] = Variable<String>(textUr);
     return map;
   }
 
@@ -791,6 +1175,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
       textRu: Value(textRu),
       textUzLat: Value(textUzLat),
       textUzCyr: Value(textUzCyr),
+      textKk: Value(textKk),
+      textTg: Value(textTg),
+      textTr: Value(textTr),
+      textUr: Value(textUr),
     );
   }
 
@@ -805,6 +1193,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
       textRu: serializer.fromJson<String>(json['textRu']),
       textUzLat: serializer.fromJson<String>(json['textUzLat']),
       textUzCyr: serializer.fromJson<String>(json['textUzCyr']),
+      textKk: serializer.fromJson<String>(json['textKk']),
+      textTg: serializer.fromJson<String>(json['textTg']),
+      textTr: serializer.fromJson<String>(json['textTr']),
+      textUr: serializer.fromJson<String>(json['textUr']),
     );
   }
   @override
@@ -818,6 +1210,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
       'textRu': serializer.toJson<String>(textRu),
       'textUzLat': serializer.toJson<String>(textUzLat),
       'textUzCyr': serializer.toJson<String>(textUzCyr),
+      'textKk': serializer.toJson<String>(textKk),
+      'textTg': serializer.toJson<String>(textTg),
+      'textTr': serializer.toJson<String>(textTr),
+      'textUr': serializer.toJson<String>(textUr),
     };
   }
 
@@ -828,7 +1224,11 @@ class Ayah extends DataClass implements Insertable<Ayah> {
           String? textEn,
           String? textRu,
           String? textUzLat,
-          String? textUzCyr}) =>
+          String? textUzCyr,
+          String? textKk,
+          String? textTg,
+          String? textTr,
+          String? textUr}) =>
       Ayah(
         id: id ?? this.id,
         surahId: surahId ?? this.surahId,
@@ -837,6 +1237,10 @@ class Ayah extends DataClass implements Insertable<Ayah> {
         textRu: textRu ?? this.textRu,
         textUzLat: textUzLat ?? this.textUzLat,
         textUzCyr: textUzCyr ?? this.textUzCyr,
+        textKk: textKk ?? this.textKk,
+        textTg: textTg ?? this.textTg,
+        textTr: textTr ?? this.textTr,
+        textUr: textUr ?? this.textUr,
       );
   @override
   String toString() {
@@ -847,14 +1251,18 @@ class Ayah extends DataClass implements Insertable<Ayah> {
           ..write('textEn: $textEn, ')
           ..write('textRu: $textRu, ')
           ..write('textUzLat: $textUzLat, ')
-          ..write('textUzCyr: $textUzCyr')
+          ..write('textUzCyr: $textUzCyr, ')
+          ..write('textKk: $textKk, ')
+          ..write('textTg: $textTg, ')
+          ..write('textTr: $textTr, ')
+          ..write('textUr: $textUr')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, surahId, ayahNumber, textEn, textRu, textUzLat, textUzCyr);
+  int get hashCode => Object.hash(id, surahId, ayahNumber, textEn, textRu,
+      textUzLat, textUzCyr, textKk, textTg, textTr, textUr);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -865,7 +1273,11 @@ class Ayah extends DataClass implements Insertable<Ayah> {
           other.textEn == this.textEn &&
           other.textRu == this.textRu &&
           other.textUzLat == this.textUzLat &&
-          other.textUzCyr == this.textUzCyr);
+          other.textUzCyr == this.textUzCyr &&
+          other.textKk == this.textKk &&
+          other.textTg == this.textTg &&
+          other.textTr == this.textTr &&
+          other.textUr == this.textUr);
 }
 
 class AyahsCompanion extends UpdateCompanion<Ayah> {
@@ -876,6 +1288,10 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
   final Value<String> textRu;
   final Value<String> textUzLat;
   final Value<String> textUzCyr;
+  final Value<String> textKk;
+  final Value<String> textTg;
+  final Value<String> textTr;
+  final Value<String> textUr;
   const AyahsCompanion({
     this.id = const Value.absent(),
     this.surahId = const Value.absent(),
@@ -884,6 +1300,10 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
     this.textRu = const Value.absent(),
     this.textUzLat = const Value.absent(),
     this.textUzCyr = const Value.absent(),
+    this.textKk = const Value.absent(),
+    this.textTg = const Value.absent(),
+    this.textTr = const Value.absent(),
+    this.textUr = const Value.absent(),
   });
   AyahsCompanion.insert({
     this.id = const Value.absent(),
@@ -893,12 +1313,20 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
     required String textRu,
     required String textUzLat,
     required String textUzCyr,
+    required String textKk,
+    required String textTg,
+    required String textTr,
+    required String textUr,
   })  : surahId = Value(surahId),
         ayahNumber = Value(ayahNumber),
         textEn = Value(textEn),
         textRu = Value(textRu),
         textUzLat = Value(textUzLat),
-        textUzCyr = Value(textUzCyr);
+        textUzCyr = Value(textUzCyr),
+        textKk = Value(textKk),
+        textTg = Value(textTg),
+        textTr = Value(textTr),
+        textUr = Value(textUr);
   static Insertable<Ayah> custom({
     Expression<int>? id,
     Expression<int>? surahId,
@@ -907,6 +1335,10 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
     Expression<String>? textRu,
     Expression<String>? textUzLat,
     Expression<String>? textUzCyr,
+    Expression<String>? textKk,
+    Expression<String>? textTg,
+    Expression<String>? textTr,
+    Expression<String>? textUr,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -916,6 +1348,10 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
       if (textRu != null) 'text_ru': textRu,
       if (textUzLat != null) 'text_uz_lat': textUzLat,
       if (textUzCyr != null) 'text_uz_cyr': textUzCyr,
+      if (textKk != null) 'text_kk': textKk,
+      if (textTg != null) 'text_tg': textTg,
+      if (textTr != null) 'text_tr': textTr,
+      if (textUr != null) 'text_ur': textUr,
     });
   }
 
@@ -926,7 +1362,11 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
       Value<String>? textEn,
       Value<String>? textRu,
       Value<String>? textUzLat,
-      Value<String>? textUzCyr}) {
+      Value<String>? textUzCyr,
+      Value<String>? textKk,
+      Value<String>? textTg,
+      Value<String>? textTr,
+      Value<String>? textUr}) {
     return AyahsCompanion(
       id: id ?? this.id,
       surahId: surahId ?? this.surahId,
@@ -935,6 +1375,10 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
       textRu: textRu ?? this.textRu,
       textUzLat: textUzLat ?? this.textUzLat,
       textUzCyr: textUzCyr ?? this.textUzCyr,
+      textKk: textKk ?? this.textKk,
+      textTg: textTg ?? this.textTg,
+      textTr: textTr ?? this.textTr,
+      textUr: textUr ?? this.textUr,
     );
   }
 
@@ -962,6 +1406,18 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
     if (textUzCyr.present) {
       map['text_uz_cyr'] = Variable<String>(textUzCyr.value);
     }
+    if (textKk.present) {
+      map['text_kk'] = Variable<String>(textKk.value);
+    }
+    if (textTg.present) {
+      map['text_tg'] = Variable<String>(textTg.value);
+    }
+    if (textTr.present) {
+      map['text_tr'] = Variable<String>(textTr.value);
+    }
+    if (textUr.present) {
+      map['text_ur'] = Variable<String>(textUr.value);
+    }
     return map;
   }
 
@@ -974,7 +1430,11 @@ class AyahsCompanion extends UpdateCompanion<Ayah> {
           ..write('textEn: $textEn, ')
           ..write('textRu: $textRu, ')
           ..write('textUzLat: $textUzLat, ')
-          ..write('textUzCyr: $textUzCyr')
+          ..write('textUzCyr: $textUzCyr, ')
+          ..write('textKk: $textKk, ')
+          ..write('textTg: $textTg, ')
+          ..write('textTr: $textTr, ')
+          ..write('textUr: $textUr')
           ..write(')'))
         .toString();
   }

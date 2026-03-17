@@ -5,7 +5,7 @@ A comprehensive Flutter plugin providing offline access to Quran data including 
 ## Features
 
 - 📖 **Complete Quran Data**: All 114 Surahs, 6236 Ayahs, and 30 Juz
-- 🌍 **Multi-language Support**: English, Russian, Uzbek (Latin & Cyrillic)
+- 🌍 **Multi-language Support**: English, Russian, Uzbek (Latin & Cyrillic), Kazakh, Tajik, Turkish, Urdu
 - � **Revelation Info**: Meccan/Medinan designation with localized city names
 - �🔍 **Advanced Search**: Search Ayahs and Surah names with pagination
 - 📄 **Page-based Layout**: Access Quran pages with lines and words for rendering
@@ -67,14 +67,18 @@ final repository = QuranDb.instance.repository;
 
 ### Languages
 
-The plugin supports 4 languages through the `QuranLanguage` enum:
+The plugin supports 8 languages through the `QuranLanguage` enum:
 
 ```dart
 enum QuranLanguage {
   english,        // English
-  russian,        // Russian
-  uzbekLatin,     // Uzbek (Latin script)
-  uzbekCyrillic,  // Uzbek (Cyrillic script)
+  russian,       // Russian
+  uzbekLatin,    // Uzbek (Latin script)
+  uzbekCyrillic, // Uzbek (Cyrillic script)
+  kazakh,        // Kazakh
+  tajik,         // Tajik
+  turkish,       // Turkish
+  urdu,          // Urdu
 }
 ```
 
@@ -97,6 +101,10 @@ The localized city names are available through `LocalizedSurahModel.revelationCi
 | Russian | Мекка | Медина |
 | Uzbek Latin | Makka | Madina |
 | Uzbek Cyrillic | Макка | Мадина |
+| Kazakh | Мекке | Медине |
+| Tajik | Макка | Мадина |
+| Turkish | Mekke | Medine |
+| Urdu | مکہ | مدینہ |
 
 ### Surah Methods
 
@@ -649,6 +657,20 @@ When you're done using the plugin (e.g., when the app closes):
 
 ```dart
 await QuranDb.instance.close();
+```
+
+## Code generation
+
+After changing database tables (in `lib/src/database/quran_database.dart`) or Freezed/JSON models (e.g. `ayah_model.dart`, `surah_model.dart`), regenerate the generated code:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Or with Flutter:
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ## License

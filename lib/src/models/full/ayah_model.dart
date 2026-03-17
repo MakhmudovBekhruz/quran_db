@@ -27,6 +27,18 @@ class AyahModel with _$AyahModel {
 
     /// Uzbek translation in Cyrillic script.
     required String textUzCyr,
+
+    /// Kazakh translation.
+    required String textKk,
+
+    /// Tajik translation.
+    required String textTg,
+
+    /// Turkish translation.
+    required String textTr,
+
+    /// Urdu translation.
+    required String textUr,
   }) = _AyahModel;
 
   factory AyahModel.fromJson(Map<String, dynamic> json) =>

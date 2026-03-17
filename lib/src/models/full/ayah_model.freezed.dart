@@ -41,6 +41,18 @@ mixin _$AyahModel {
   /// Uzbek translation in Cyrillic script.
   String get textUzCyr => throw _privateConstructorUsedError;
 
+  /// Kazakh translation.
+  String get textKk => throw _privateConstructorUsedError;
+
+  /// Tajik translation.
+  String get textTg => throw _privateConstructorUsedError;
+
+  /// Turkish translation.
+  String get textTr => throw _privateConstructorUsedError;
+
+  /// Urdu translation.
+  String get textUr => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $AyahModelCopyWith<AyahModel> get copyWith =>
@@ -59,7 +71,11 @@ abstract class $AyahModelCopyWith<$Res> {
       String textEn,
       String textRu,
       String textUzLat,
-      String textUzCyr});
+      String textUzCyr,
+      String textKk,
+      String textTg,
+      String textTr,
+      String textUr});
 }
 
 /// @nodoc
@@ -82,6 +98,10 @@ class _$AyahModelCopyWithImpl<$Res, $Val extends AyahModel>
     Object? textRu = null,
     Object? textUzLat = null,
     Object? textUzCyr = null,
+    Object? textKk = null,
+    Object? textTg = null,
+    Object? textTr = null,
+    Object? textUr = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -112,6 +132,22 @@ class _$AyahModelCopyWithImpl<$Res, $Val extends AyahModel>
           ? _value.textUzCyr
           : textUzCyr // ignore: cast_nullable_to_non_nullable
               as String,
+      textKk: null == textKk
+          ? _value.textKk
+          : textKk // ignore: cast_nullable_to_non_nullable
+              as String,
+      textTg: null == textTg
+          ? _value.textTg
+          : textTg // ignore: cast_nullable_to_non_nullable
+              as String,
+      textTr: null == textTr
+          ? _value.textTr
+          : textTr // ignore: cast_nullable_to_non_nullable
+              as String,
+      textUr: null == textUr
+          ? _value.textUr
+          : textUr // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -131,7 +167,11 @@ abstract class _$$AyahModelImplCopyWith<$Res>
       String textEn,
       String textRu,
       String textUzLat,
-      String textUzCyr});
+      String textUzCyr,
+      String textKk,
+      String textTg,
+      String textTr,
+      String textUr});
 }
 
 /// @nodoc
@@ -152,6 +192,10 @@ class __$$AyahModelImplCopyWithImpl<$Res>
     Object? textRu = null,
     Object? textUzLat = null,
     Object? textUzCyr = null,
+    Object? textKk = null,
+    Object? textTg = null,
+    Object? textTr = null,
+    Object? textUr = null,
   }) {
     return _then(_$AyahModelImpl(
       id: null == id
@@ -182,6 +226,22 @@ class __$$AyahModelImplCopyWithImpl<$Res>
           ? _value.textUzCyr
           : textUzCyr // ignore: cast_nullable_to_non_nullable
               as String,
+      textKk: null == textKk
+          ? _value.textKk
+          : textKk // ignore: cast_nullable_to_non_nullable
+              as String,
+      textTg: null == textTg
+          ? _value.textTg
+          : textTg // ignore: cast_nullable_to_non_nullable
+              as String,
+      textTr: null == textTr
+          ? _value.textTr
+          : textTr // ignore: cast_nullable_to_non_nullable
+              as String,
+      textUr: null == textUr
+          ? _value.textUr
+          : textUr // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -196,7 +256,11 @@ class _$AyahModelImpl implements _AyahModel {
       required this.textEn,
       required this.textRu,
       required this.textUzLat,
-      required this.textUzCyr});
+      required this.textUzCyr,
+      required this.textKk,
+      required this.textTg,
+      required this.textTr,
+      required this.textUr});
 
   factory _$AyahModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AyahModelImplFromJson(json);
@@ -229,9 +293,25 @@ class _$AyahModelImpl implements _AyahModel {
   @override
   final String textUzCyr;
 
+  /// Kazakh translation.
+  @override
+  final String textKk;
+
+  /// Tajik translation.
+  @override
+  final String textTg;
+
+  /// Turkish translation.
+  @override
+  final String textTr;
+
+  /// Urdu translation.
+  @override
+  final String textUr;
+
   @override
   String toString() {
-    return 'AyahModel(id: $id, surahId: $surahId, ayahNumber: $ayahNumber, textEn: $textEn, textRu: $textRu, textUzLat: $textUzLat, textUzCyr: $textUzCyr)';
+    return 'AyahModel(id: $id, surahId: $surahId, ayahNumber: $ayahNumber, textEn: $textEn, textRu: $textRu, textUzLat: $textUzLat, textUzCyr: $textUzCyr, textKk: $textKk, textTg: $textTg, textTr: $textTr, textUr: $textUr)';
   }
 
   @override
@@ -248,13 +328,17 @@ class _$AyahModelImpl implements _AyahModel {
             (identical(other.textUzLat, textUzLat) ||
                 other.textUzLat == textUzLat) &&
             (identical(other.textUzCyr, textUzCyr) ||
-                other.textUzCyr == textUzCyr));
+                other.textUzCyr == textUzCyr) &&
+            (identical(other.textKk, textKk) || other.textKk == textKk) &&
+            (identical(other.textTg, textTg) || other.textTg == textTg) &&
+            (identical(other.textTr, textTr) || other.textTr == textTr) &&
+            (identical(other.textUr, textUr) || other.textUr == textUr));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, surahId, ayahNumber, textEn,
-      textRu, textUzLat, textUzCyr);
+      textRu, textUzLat, textUzCyr, textKk, textTg, textTr, textUr);
 
   @JsonKey(ignore: true)
   @override
@@ -278,7 +362,11 @@ abstract class _AyahModel implements AyahModel {
       required final String textEn,
       required final String textRu,
       required final String textUzLat,
-      required final String textUzCyr}) = _$AyahModelImpl;
+      required final String textUzCyr,
+      required final String textKk,
+      required final String textTg,
+      required final String textTr,
+      required final String textUr}) = _$AyahModelImpl;
 
   factory _AyahModel.fromJson(Map<String, dynamic> json) =
       _$AyahModelImpl.fromJson;
@@ -311,6 +399,22 @@ abstract class _AyahModel implements AyahModel {
 
   /// Uzbek translation in Cyrillic script.
   String get textUzCyr;
+  @override
+
+  /// Kazakh translation.
+  String get textKk;
+  @override
+
+  /// Tajik translation.
+  String get textTg;
+  @override
+
+  /// Turkish translation.
+  String get textTr;
+  @override
+
+  /// Urdu translation.
+  String get textUr;
   @override
   @JsonKey(ignore: true)
   _$$AyahModelImplCopyWith<_$AyahModelImpl> get copyWith =>
