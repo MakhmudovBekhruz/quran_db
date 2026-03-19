@@ -356,7 +356,7 @@ Future<QuranDatabase> openQuranDatabase({String? customPath}) async {
   }
 
   final dbFolder = await getApplicationDocumentsDirectory();
-  final file = File(p.join(dbFolder.path, 'quran_db.sqlite'));
+  final file = File(p.join(dbFolder.path, 'quran_db_2.sqlite'));
 
   if (!await file.exists()) {
     // Copy from assets
