@@ -112,6 +112,24 @@ class QuranDatabase extends _$QuranDatabase {
   @override
   int get schemaVersion => 2;
 
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (Migrator m) async {
+          await m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          // The database is shipped as a prebuilt, read-only asset. In the
+          // unlikely event that an older on-device schema is opened, we
+          // recreate the schema to match the current version.
+          if (from < 2) {
+            for (final table in allTables) {
+              await m.deleteTable(table.actualTableName);
+            }
+            await m.createAll();
+          }
+        },
+      );
+
   // ============ Surah Queries ============
 
   /// Gets all surahs.
